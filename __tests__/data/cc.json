@@ -1,0 +1,1428 @@
+{
+  "src/cvrp/constraints_validators.py": [
+    {
+      "type": "class",
+      "rank": "B",
+      "name": "BatteryTWValidator",
+      "col_offset": 0,
+      "complexity": 8,
+      "endline": 64,
+      "lineno": 34,
+      "methods": [
+        {
+          "type": "method",
+          "rank": "B",
+          "name": "is_valid",
+          "col_offset": 4,
+          "classname": "BatteryTWValidator",
+          "complexity": 7,
+          "endline": 64,
+          "lineno": 38,
+          "closures": []
+        }
+      ]
+    },
+    {
+      "type": "method",
+      "rank": "B",
+      "name": "is_valid",
+      "col_offset": 4,
+      "classname": "BatteryTWValidator",
+      "complexity": 7,
+      "endline": 64,
+      "lineno": 38,
+      "closures": []
+    },
+    {
+      "type": "class",
+      "rank": "B",
+      "name": "CapacityValidator",
+      "col_offset": 0,
+      "complexity": 7,
+      "endline": 112,
+      "lineno": 99,
+      "methods": [
+        {
+          "type": "method",
+          "rank": "B",
+          "name": "is_valid",
+          "col_offset": 4,
+          "classname": "CapacityValidator",
+          "complexity": 6,
+          "endline": 112,
+          "lineno": 102,
+          "closures": []
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "rank": "B",
+      "name": "TownUnicityValidator",
+      "col_offset": 0,
+      "complexity": 6,
+      "endline": 96,
+      "lineno": 77,
+      "methods": [
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "is_valid",
+          "col_offset": 4,
+          "classname": "TownUnicityValidator",
+          "complexity": 5,
+          "endline": 96,
+          "lineno": 87,
+          "closures": []
+        }
+      ]
+    },
+    {
+      "type": "method",
+      "rank": "B",
+      "name": "is_valid",
+      "col_offset": 4,
+      "classname": "CapacityValidator",
+      "complexity": 6,
+      "endline": 112,
+      "lineno": 102,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "is_valid",
+      "col_offset": 4,
+      "classname": "TownUnicityValidator",
+      "complexity": 5,
+      "endline": 96,
+      "lineno": 87,
+      "closures": []
+    },
+    {
+      "type": "class",
+      "rank": "A",
+      "name": "VehiculeCountValidator",
+      "col_offset": 0,
+      "complexity": 2,
+      "endline": 73,
+      "lineno": 68,
+      "methods": [
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "is_valid",
+          "col_offset": 4,
+          "classname": "VehiculeCountValidator",
+          "complexity": 1,
+          "endline": 73,
+          "lineno": 71,
+          "closures": []
+        }
+      ]
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "is_valid",
+      "col_offset": 4,
+      "classname": "VehiculeCountValidator",
+      "complexity": 1,
+      "endline": 73,
+      "lineno": 71,
+      "closures": []
+    }
+  ],
+  "src/cvrp/individual.py": [
+    {
+      "type": "class",
+      "rank": "A",
+      "name": "ConstraintValidator",
+      "col_offset": 0,
+      "complexity": 2,
+      "endline": 46,
+      "lineno": 41,
+      "methods": [
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "is_valid",
+          "col_offset": 4,
+          "classname": "ConstraintValidator",
+          "complexity": 1,
+          "endline": 46,
+          "lineno": 45,
+          "closures": []
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "rank": "A",
+      "name": "Individual",
+      "col_offset": 0,
+      "complexity": 2,
+      "endline": 88,
+      "lineno": 49,
+      "methods": [
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "__init__",
+          "col_offset": 4,
+          "classname": "Individual",
+          "complexity": 1,
+          "endline": 62,
+          "lineno": 53,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "get_fitness",
+          "col_offset": 4,
+          "classname": "Individual",
+          "complexity": 1,
+          "endline": 66,
+          "lineno": 65,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "mutate",
+          "col_offset": 4,
+          "classname": "Individual",
+          "complexity": 1,
+          "endline": 70,
+          "lineno": 69,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "crossover",
+          "col_offset": 4,
+          "classname": "Individual",
+          "complexity": 1,
+          "endline": 78,
+          "lineno": 77,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "__copy__",
+          "col_offset": 4,
+          "classname": "Individual",
+          "complexity": 1,
+          "endline": 88,
+          "lineno": 87,
+          "closures": []
+        }
+      ]
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "is_valid",
+      "col_offset": 4,
+      "classname": "ConstraintValidator",
+      "complexity": 1,
+      "endline": 46,
+      "lineno": 45,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "__init__",
+      "col_offset": 4,
+      "classname": "Individual",
+      "complexity": 1,
+      "endline": 62,
+      "lineno": 53,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "get_fitness",
+      "col_offset": 4,
+      "classname": "Individual",
+      "complexity": 1,
+      "endline": 66,
+      "lineno": 65,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "mutate",
+      "col_offset": 4,
+      "classname": "Individual",
+      "complexity": 1,
+      "endline": 70,
+      "lineno": 69,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "crossover",
+      "col_offset": 4,
+      "classname": "Individual",
+      "complexity": 1,
+      "endline": 78,
+      "lineno": 77,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "__copy__",
+      "col_offset": 4,
+      "classname": "Individual",
+      "complexity": 1,
+      "endline": 88,
+      "lineno": 87,
+      "closures": []
+    }
+  ],
+  "src/cvrp/ga.py": [
+    {
+      "type": "method",
+      "rank": "B",
+      "name": "run",
+      "col_offset": 4,
+      "classname": "GA",
+      "complexity": 8,
+      "endline": 106,
+      "lineno": 68,
+      "closures": []
+    },
+    {
+      "type": "class",
+      "rank": "A",
+      "name": "GA",
+      "col_offset": 0,
+      "complexity": 4,
+      "endline": 131,
+      "lineno": 35,
+      "methods": [
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "__init__",
+          "col_offset": 4,
+          "classname": "GA",
+          "complexity": 3,
+          "endline": 66,
+          "lineno": 42,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "B",
+          "name": "run",
+          "col_offset": 4,
+          "classname": "GA",
+          "complexity": 8,
+          "endline": 106,
+          "lineno": 68,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "_crossbreed",
+          "col_offset": 4,
+          "classname": "GA",
+          "complexity": 3,
+          "endline": 120,
+          "lineno": 108,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "_mutate",
+          "col_offset": 4,
+          "classname": "GA",
+          "complexity": 3,
+          "endline": 127,
+          "lineno": 122,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "__len__",
+          "col_offset": 4,
+          "classname": "GA",
+          "complexity": 1,
+          "endline": 131,
+          "lineno": 129,
+          "closures": []
+        }
+      ]
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "__init__",
+      "col_offset": 4,
+      "classname": "GA",
+      "complexity": 3,
+      "endline": 66,
+      "lineno": 42,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "_crossbreed",
+      "col_offset": 4,
+      "classname": "GA",
+      "complexity": 3,
+      "endline": 120,
+      "lineno": 108,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "_mutate",
+      "col_offset": 4,
+      "classname": "GA",
+      "complexity": 3,
+      "endline": 127,
+      "lineno": 122,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "__len__",
+      "col_offset": 4,
+      "classname": "GA",
+      "complexity": 1,
+      "endline": 131,
+      "lineno": 129,
+      "closures": []
+    }
+  ],
+  "src/cvrp/ecvrp.py": [
+    {
+      "type": "method",
+      "rank": "B",
+      "name": "best_place_for",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 10,
+      "endline": 212,
+      "lineno": 157,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "B",
+      "name": "__merge_roads",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 6,
+      "endline": 313,
+      "lineno": 292,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "__two_opt",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 5,
+      "endline": 395,
+      "lineno": 363,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "crossover",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 5,
+      "endline": 572,
+      "lineno": 529,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "get_towns",
+      "col_offset": 4,
+      "classname": "ECVRPInstance",
+      "complexity": 4,
+      "endline": 694,
+      "lineno": 691,
+      "closures": []
+    },
+    {
+      "type": "class",
+      "rank": "A",
+      "name": "ECVRPSolution",
+      "col_offset": 0,
+      "complexity": 3,
+      "endline": 587,
+      "lineno": 37,
+      "methods": [
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "__init__",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 3,
+          "endline": 72,
+          "lineno": 50,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "get_instance",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 1,
+          "endline": 76,
+          "lineno": 74,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "get_points",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 1,
+          "endline": 80,
+          "lineno": 78,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "get_roads",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 3,
+          "endline": 99,
+          "lineno": 82,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "get_fitness",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 2,
+          "endline": 116,
+          "lineno": 101,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "_compute_fitness",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 3,
+          "endline": 137,
+          "lineno": 118,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "_compute_road_fitness",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 2,
+          "endline": 155,
+          "lineno": 139,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "B",
+          "name": "best_place_for",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 10,
+          "endline": 212,
+          "lineno": 157,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "__closest_charger",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 3,
+          "endline": 236,
+          "lineno": 214,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "_road_correction",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 3,
+          "endline": 268,
+          "lineno": 238,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "__remove_point",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 3,
+          "endline": 290,
+          "lineno": 270,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "B",
+          "name": "__merge_roads",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 6,
+          "endline": 313,
+          "lineno": 292,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "__pull_off_chargers",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 3,
+          "endline": 330,
+          "lineno": 315,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "__reversed_content",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 2,
+          "endline": 361,
+          "lineno": 332,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "__two_opt",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 5,
+          "endline": 395,
+          "lineno": 363,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "_delete_empty_road",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 3,
+          "endline": 409,
+          "lineno": 397,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "mutate",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 1,
+          "endline": 434,
+          "lineno": 411,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "validate",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 2,
+          "endline": 442,
+          "lineno": 436,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "get_solution",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 2,
+          "endline": 465,
+          "lineno": 445,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "__choose_road",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 1,
+          "endline": 481,
+          "lineno": 467,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "__insert_points",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 3,
+          "endline": 501,
+          "lineno": 483,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "__update_solution",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 2,
+          "endline": 527,
+          "lineno": 503,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "crossover",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 5,
+          "endline": 572,
+          "lineno": 529,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "is_valid",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 3,
+          "endline": 580,
+          "lineno": 574,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "__copy__",
+          "col_offset": 4,
+          "classname": "ECVRPSolution",
+          "complexity": 1,
+          "endline": 587,
+          "lineno": 582,
+          "closures": []
+        }
+      ]
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "__init__",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 3,
+      "endline": 72,
+      "lineno": 50,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "get_roads",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 3,
+      "endline": 99,
+      "lineno": 82,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "_compute_fitness",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 3,
+      "endline": 137,
+      "lineno": 118,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "__closest_charger",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 3,
+      "endline": 236,
+      "lineno": 214,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "_road_correction",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 3,
+      "endline": 268,
+      "lineno": 238,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "__remove_point",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 3,
+      "endline": 290,
+      "lineno": 270,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "__pull_off_chargers",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 3,
+      "endline": 330,
+      "lineno": 315,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "_delete_empty_road",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 3,
+      "endline": 409,
+      "lineno": 397,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "__insert_points",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 3,
+      "endline": 501,
+      "lineno": 483,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "is_valid",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 3,
+      "endline": 580,
+      "lineno": 574,
+      "closures": []
+    },
+    {
+      "type": "function",
+      "rank": "A",
+      "name": "tuple_to_list",
+      "col_offset": 0,
+      "complexity": 2,
+      "endline": 592,
+      "lineno": 590,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "get_fitness",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 2,
+      "endline": 116,
+      "lineno": 101,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "_compute_road_fitness",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 2,
+      "endline": 155,
+      "lineno": 139,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "__reversed_content",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 2,
+      "endline": 361,
+      "lineno": 332,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "validate",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 2,
+      "endline": 442,
+      "lineno": 436,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "get_solution",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 2,
+      "endline": 465,
+      "lineno": 445,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "__update_solution",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 2,
+      "endline": 527,
+      "lineno": 503,
+      "closures": []
+    },
+    {
+      "type": "class",
+      "rank": "A",
+      "name": "ECVRPInstance",
+      "col_offset": 0,
+      "complexity": 2,
+      "endline": 694,
+      "lineno": 595,
+      "methods": [
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "__init__",
+          "col_offset": 4,
+          "classname": "ECVRPInstance",
+          "complexity": 1,
+          "endline": 632,
+          "lineno": 609,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "is_depot",
+          "col_offset": 4,
+          "classname": "ECVRPInstance",
+          "complexity": 1,
+          "endline": 636,
+          "lineno": 634,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "get_depot",
+          "col_offset": 4,
+          "classname": "ECVRPInstance",
+          "complexity": 1,
+          "endline": 640,
+          "lineno": 638,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "get_distance",
+          "col_offset": 4,
+          "classname": "ECVRPInstance",
+          "complexity": 1,
+          "endline": 644,
+          "lineno": 642,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "get_time_used",
+          "col_offset": 4,
+          "classname": "ECVRPInstance",
+          "complexity": 1,
+          "endline": 648,
+          "lineno": 646,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "get_chargers",
+          "col_offset": 4,
+          "classname": "ECVRPInstance",
+          "complexity": 1,
+          "endline": 652,
+          "lineno": 650,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "is_charger",
+          "col_offset": 4,
+          "classname": "ECVRPInstance",
+          "complexity": 1,
+          "endline": 656,
+          "lineno": 654,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "get_demand",
+          "col_offset": 4,
+          "classname": "ECVRPInstance",
+          "complexity": 1,
+          "endline": 665,
+          "lineno": 658,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "get_batterie_consumption",
+          "col_offset": 4,
+          "classname": "ECVRPInstance",
+          "complexity": 1,
+          "endline": 669,
+          "lineno": 667,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "get_batterie_charging_rate",
+          "col_offset": 4,
+          "classname": "ECVRPInstance",
+          "complexity": 1,
+          "endline": 673,
+          "lineno": 671,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "get_ev_count",
+          "col_offset": 4,
+          "classname": "ECVRPInstance",
+          "complexity": 1,
+          "endline": 677,
+          "lineno": 675,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "get_ev_capacity",
+          "col_offset": 4,
+          "classname": "ECVRPInstance",
+          "complexity": 1,
+          "endline": 681,
+          "lineno": 679,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "get_ev_battery",
+          "col_offset": 4,
+          "classname": "ECVRPInstance",
+          "complexity": 1,
+          "endline": 685,
+          "lineno": 683,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "get_tw",
+          "col_offset": 4,
+          "classname": "ECVRPInstance",
+          "complexity": 1,
+          "endline": 689,
+          "lineno": 687,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "get_towns",
+          "col_offset": 4,
+          "classname": "ECVRPInstance",
+          "complexity": 4,
+          "endline": 694,
+          "lineno": 691,
+          "closures": []
+        }
+      ]
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "get_instance",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 1,
+      "endline": 76,
+      "lineno": 74,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "get_points",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 1,
+      "endline": 80,
+      "lineno": 78,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "mutate",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 1,
+      "endline": 434,
+      "lineno": 411,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "__choose_road",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 1,
+      "endline": 481,
+      "lineno": 467,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "__copy__",
+      "col_offset": 4,
+      "classname": "ECVRPSolution",
+      "complexity": 1,
+      "endline": 587,
+      "lineno": 582,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "__init__",
+      "col_offset": 4,
+      "classname": "ECVRPInstance",
+      "complexity": 1,
+      "endline": 632,
+      "lineno": 609,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "is_depot",
+      "col_offset": 4,
+      "classname": "ECVRPInstance",
+      "complexity": 1,
+      "endline": 636,
+      "lineno": 634,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "get_depot",
+      "col_offset": 4,
+      "classname": "ECVRPInstance",
+      "complexity": 1,
+      "endline": 640,
+      "lineno": 638,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "get_distance",
+      "col_offset": 4,
+      "classname": "ECVRPInstance",
+      "complexity": 1,
+      "endline": 644,
+      "lineno": 642,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "get_time_used",
+      "col_offset": 4,
+      "classname": "ECVRPInstance",
+      "complexity": 1,
+      "endline": 648,
+      "lineno": 646,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "get_chargers",
+      "col_offset": 4,
+      "classname": "ECVRPInstance",
+      "complexity": 1,
+      "endline": 652,
+      "lineno": 650,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "is_charger",
+      "col_offset": 4,
+      "classname": "ECVRPInstance",
+      "complexity": 1,
+      "endline": 656,
+      "lineno": 654,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "get_demand",
+      "col_offset": 4,
+      "classname": "ECVRPInstance",
+      "complexity": 1,
+      "endline": 665,
+      "lineno": 658,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "get_batterie_consumption",
+      "col_offset": 4,
+      "classname": "ECVRPInstance",
+      "complexity": 1,
+      "endline": 669,
+      "lineno": 667,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "get_batterie_charging_rate",
+      "col_offset": 4,
+      "classname": "ECVRPInstance",
+      "complexity": 1,
+      "endline": 673,
+      "lineno": 671,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "get_ev_count",
+      "col_offset": 4,
+      "classname": "ECVRPInstance",
+      "complexity": 1,
+      "endline": 677,
+      "lineno": 675,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "get_ev_capacity",
+      "col_offset": 4,
+      "classname": "ECVRPInstance",
+      "complexity": 1,
+      "endline": 681,
+      "lineno": 679,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "get_ev_battery",
+      "col_offset": 4,
+      "classname": "ECVRPInstance",
+      "complexity": 1,
+      "endline": 685,
+      "lineno": 683,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "get_tw",
+      "col_offset": 4,
+      "classname": "ECVRPInstance",
+      "complexity": 1,
+      "endline": 689,
+      "lineno": 687,
+      "closures": []
+    }
+  ],
+  "src/cvrp/json_io.py": [
+    {
+      "type": "function",
+      "rank": "A",
+      "name": "read_json",
+      "col_offset": 0,
+      "complexity": 2,
+      "endline": 123,
+      "lineno": 110,
+      "closures": []
+    },
+    {
+      "type": "function",
+      "rank": "A",
+      "name": "get_header",
+      "col_offset": 0,
+      "complexity": 2,
+      "endline": 141,
+      "lineno": 126,
+      "closures": []
+    },
+    {
+      "type": "class",
+      "rank": "A",
+      "name": "JsonWriter",
+      "col_offset": 0,
+      "complexity": 2,
+      "endline": 107,
+      "lineno": 36,
+      "methods": [
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "__init__",
+          "col_offset": 4,
+          "classname": "JsonWriter",
+          "complexity": 1,
+          "endline": 63,
+          "lineno": 43,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "add_snapshot",
+          "col_offset": 4,
+          "classname": "JsonWriter",
+          "complexity": 2,
+          "endline": 84,
+          "lineno": 65,
+          "closures": []
+        },
+        {
+          "type": "method",
+          "rank": "A",
+          "name": "dump",
+          "col_offset": 4,
+          "classname": "JsonWriter",
+          "complexity": 1,
+          "endline": 107,
+          "lineno": 86,
+          "closures": []
+        }
+      ]
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "add_snapshot",
+      "col_offset": 4,
+      "classname": "JsonWriter",
+      "complexity": 2,
+      "endline": 84,
+      "lineno": 65,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "__init__",
+      "col_offset": 4,
+      "classname": "JsonWriter",
+      "complexity": 1,
+      "endline": 63,
+      "lineno": 43,
+      "closures": []
+    },
+    {
+      "type": "method",
+      "rank": "A",
+      "name": "dump",
+      "col_offset": 4,
+      "classname": "JsonWriter",
+      "complexity": 1,
+      "endline": 107,
+      "lineno": 86,
+      "closures": []
+    }
+  ]
+}
