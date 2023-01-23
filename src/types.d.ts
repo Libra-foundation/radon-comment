@@ -27,4 +27,4 @@ export interface CCEntry {
     closures?: Array<unknown>
 }
 
-export type CCReport = Record<string,CCEntry>
+export type CCReport = Record<string,Array<CCEntry>>

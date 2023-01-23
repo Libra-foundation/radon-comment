@@ -26,7 +26,8 @@
       "extends": ["plugin:jest/recommended"],
       "rules": {
         "@typescript-eslint/unbound-method": "off",
-        "jest/unbound-method": "error"
+        "jest/unbound-method": "error",
+        "@typescript-eslint/typedef": "off"
       }
     }
   ],
