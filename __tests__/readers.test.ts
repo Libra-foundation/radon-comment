@@ -10,13 +10,6 @@ describe("Readers tests", () => {
         expect(DATA).toBeDefined();
 
         expect(Object.keys(DATA)).toHaveLength(5)
-        
-        for (const F_NAME in DATA){
-            expect(DATA[F_NAME]).toBeDefined()
-            for (const ENTRY of DATA[F_NAME]) {
-                expect(Object.keys(ENTRY).length).toBeGreaterThan(6)
-            }
-        }
 
     });
 

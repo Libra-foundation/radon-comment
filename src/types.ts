@@ -13,6 +13,7 @@ export enum RadonRank {
     F = "F"
 }
 
+/** @see {IsCCEntry} ts-auto-guard:type-guard */
 export interface CCEntry {
     type: RadonType ,
     rank: RadonRank,
@@ -27,4 +28,5 @@ export interface CCEntry {
     closures?: Array<unknown>
 }
 
+/** @see {IsCCReport} ts-auto-guard:type-guard */
 export type CCReport = Record<string,Array<CCEntry>>
