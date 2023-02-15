@@ -1,5 +1,6 @@
-import { type CCReport, type CCEntry, type Tree } from "./types";
+import { type CCReport, type CCEntry, type Tree, RadonType } from "./types";
 import * as path from "path"
+import {IsCCEntry} from "./types.guard";
 
 const PATH_ENDS: Array<string> = [
     ".",
@@ -47,11 +48,53 @@ function ToTree (data: Readonly<CCReport>) : Array<Tree<Array<CCEntry>>> {
     return TREES
 }
 
+function FormatCCEntry(entry: CCEntry): string {
+    return `${entry.name} | ${entry.complexity } | ${entry.rank}`;
+}
+
+function ReportTree(data: Tree<Array<CCEntry>>): string {
+    let output: string = "";
+    let key: string = "";
+    while (Object.keys(data).length === 1){
+        key = Object.keys(data)[0];
+        if (Array.isArray(data[key])) {
+            break;
+        } else {
+            output += `/${key}`;
+            data = data[key] as Tree<Array<CCEntry>>;
+        }
+    }
+
+    output = `==================\n${output}\n`;
+
+    for (key of Object.keys(data)){
+        if (Array.isArray(data[key])){
+            output += `\t${key}\n`;
+            for (const ENTRY of data[key] as Array<CCEntry>){
+                if (ENTRY.type === RadonType.M){ // Methods are registered both in the class and in the file.
+                    continue;
+                }
+                output += "\t├" + FormatCCEntry(ENTRY) + "\n";
+            }
+        }
+    }
+
+    return output;
+}
+
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- Almost impossible to make readonly and still being useful.
 export function CCReporter(data: Readonly<CCReport>): string{
     const TREES: Array<Tree<Array<CCEntry>>> = ToTree(data);
 
-    return ""
+    let output:string = "";
+
+    for (const TREE of TREES){
+        output += ReportTree(TREE);
+    }
+
+    output += "=================="
+
+    return output
 }
 
 export interface TypeOfTest {

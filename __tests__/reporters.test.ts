@@ -1,7 +1,7 @@
 import {describe, test, expect, beforeAll} from "@jest/globals";
 import {CCReader} from "../src/readers";
 import type { CCEntry, CCReport, Tree } from "../src/types";
-import { TEST , type TypeOfTest} from "../src/reporters"
+import { TEST , type TypeOfTest, CCReporter} from "../src/reporters"
 
 const {ToTree} = TEST as TypeOfTest;
 
@@ -26,6 +26,12 @@ describe("Reporters tests", () => {
 
         expect(Object.keys((SRC.src as typeof SRC).cvrp)).toHaveLength(5)
     });
+
+    test("CC Reporter -- WIP report", ()=>{
+        const REPORT = CCReporter(data);
+        console.log(REPORT)
+        expect(REPORT).toBeDefined();
+    })
 
 
 })
