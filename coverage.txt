@@ -1,4 +1,0 @@
-
-> typescript-action@0.0.0 test
-> jest --coverage --coverageReporters json-summary
-
