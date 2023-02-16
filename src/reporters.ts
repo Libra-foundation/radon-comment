@@ -1,4 +1,4 @@
-import { type CCReport, type CCEntry, type Tree, RadonType } from "./types";
+import { type CCReport, type CCEntry, type Tree, RadonType, RadonRank } from "./types";
 import * as path from "path"
 import {IsCCEntry} from "./types.guard";
 
@@ -48,13 +48,29 @@ function ToTree (data: Readonly<CCReport>) : Array<Tree<Array<CCEntry>>> {
     return TREES
 }
 
-function FormatCCEntry(entry: CCEntry): string {
-    return `${entry.name} | ${entry.complexity } | ${entry.rank}`;
+function GetComplexityRank(complexity :number): RadonRank{
+    // Radon has a better way of doing this. I don't know how to cleanly copy their way of working.
+    // see https://radon.readthedocs.io/en/latest/api.html#module-radon.complexity for more information.
+    if (complexity < 6){
+        return RadonRank.A;
+    } else if (complexity < 11) {
+        return RadonRank.B;
+    } else if (complexity < 21) {
+        return RadonRank.C;
+    } else if (complexity < 31) {
+        return RadonRank.D;
+    } else if (complexity < 41) {
+        return RadonRank.E;
+    }
+    return RadonRank.F;
 }
 
 function ReportTree(data: Tree<Array<CCEntry>>): string {
     let output: string = "";
     let key: string = "";
+    let table: string = "";
+    let min_complex: number, mean_complex: number, max_complex: number;
+    let counter: number;
     while (Object.keys(data).length === 1){
         key = Object.keys(data)[0];
         if (Array.isArray(data[key])) {
@@ -65,19 +81,49 @@ function ReportTree(data: Tree<Array<CCEntry>>): string {
         }
     }
 
-    output = `==================\n${output}\n`;
+    output = `<details><summary>${output}</summary>\n`;
 
     for (key of Object.keys(data)){
         if (Array.isArray(data[key])){
-            output += `\t${key}\n`;
+            table = "";
+            
+            min_complex = Number.MAX_SAFE_INTEGER;
+            mean_complex = 0;
+            max_complex = Number.MIN_SAFE_INTEGER;
+            counter = 0;
+
             for (const ENTRY of data[key] as Array<CCEntry>){
                 if (ENTRY.type === RadonType.M){ // Methods are registered both in the class and in the file.
                     continue;
                 }
-                output += "\t├" + FormatCCEntry(ENTRY) + "\n";
+
+                if (min_complex > ENTRY.complexity){
+                    min_complex = ENTRY.complexity;
+                }
+
+                if (max_complex < ENTRY.complexity) {
+                    max_complex = ENTRY.complexity;
+                }
+
+                mean_complex += ENTRY.complexity;
+                counter ++;
+
+                table += `<tr><td>${ENTRY.name}</td><td>${ENTRY.complexity }</td><td>${ENTRY.rank}</td></tr>\n`;
             }
+            if (min_complex === max_complex) {
+                output += `<details><summary>${key} (${max_complex}) <strong>${GetComplexityRank(max_complex)}</strong></summary>\n`;
+            } else {
+                output += `<details><summary>${key} (${max_complex}/${(mean_complex/counter).toFixed(2)}/${min_complex}) <strong>${GetComplexityRank(mean_complex/counter)}</strong></summary>\n`;
+            }
+
+            output +=
+                "<table><tr><th>name</th><th>complexity</th><th>rank</th></tr>\n" + 
+                table + 
+                "</table></details>";
         }
     }
+
+    output += "</details>";
 
     return output;
 }
@@ -91,8 +137,6 @@ export function CCReporter(data: Readonly<CCReport>): string{
     for (const TREE of TREES){
         output += ReportTree(TREE);
     }
-
-    output += "=================="
 
     return output
 }
