@@ -81,7 +81,9 @@ function ReportTree(data: Tree<Array<CCEntry>>): string {
         }
     }
 
-    output = `<details><summary>${output}</summary>\n`;
+    output = 
+        `<details><summary>${output}</summary>\n` +
+        "<table>";
 
     for (key of Object.keys(data)){
         if (Array.isArray(data[key])){
@@ -110,20 +112,28 @@ function ReportTree(data: Tree<Array<CCEntry>>): string {
 
                 table += `<tr><td>${ENTRY.name}</td><td>${ENTRY.complexity }</td><td>${ENTRY.rank}</td></tr>\n`;
             }
-            if (min_complex === max_complex) {
-                output += `<details><summary>${key} (${max_complex}) <strong>${GetComplexityRank(max_complex)}</strong></summary>\n`;
-            } else {
-                output += `<details><summary>${key} (${max_complex}/${(mean_complex/counter).toFixed(2)}/${min_complex}) <strong>${GetComplexityRank(mean_complex/counter)}</strong></summary>\n`;
-            }
 
             output +=
+                `<tr><td><details><summary>${key}</summary>\n` + 
                 "<table><tr><th>name</th><th>complexity</th><th>rank</th></tr>\n" + 
                 table + 
-                "</table></details>";
+                "</table></details></td>";
+
+            if (min_complex === max_complex) {
+                output +=
+                    `<td>${max_complex}</td>` +
+                    `<td><strong>${GetComplexityRank(max_complex)}</strong></td>`;
+            } else {
+                output +=
+                    `<td>${max_complex}/${(mean_complex/counter).toFixed(2)}/${min_complex}</td>` +
+                    `<td><strong>${GetComplexityRank(mean_complex/counter)}</strong></td>\n`;
+            }
+
+            output += "</td></tr>";
         }
     }
 
-    output += "</details>";
+    output += "</table></details>";
 
     return output;
 }

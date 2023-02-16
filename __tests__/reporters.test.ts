@@ -27,9 +27,8 @@ describe("Reporters tests", () => {
         expect(Object.keys((SRC.src as typeof SRC).cvrp)).toHaveLength(5)
     });
 
-    test("CC Reporter -- WIP report", ()=>{
+    test("CC Reporter -- Report is created", ()=>{
         const REPORT = CCReporter(data);
-        console.log(REPORT)
         expect(REPORT).toBeDefined();
     })
 
