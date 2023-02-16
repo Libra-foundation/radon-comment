@@ -1,6 +1,5 @@
 import { type CCReport, type CCEntry, type Tree, RadonType, RadonRank } from "./types";
 import * as path from "path"
-import {IsCCEntry} from "./types.guard";
 
 const PATH_ENDS: Array<string> = [
     ".",
@@ -65,7 +64,8 @@ function GetComplexityRank(complexity :number): RadonRank{
     return RadonRank.F;
 }
 
-function ReportTree(data: Tree<Array<CCEntry>>): string {
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- Almost impossible to make readonly and still being useful.
+function ReportTree(data: Readonly<Tree<Array<CCEntry>>>): string {
     let output: string = "";
     let key: string = "";
     let table: string = "";
