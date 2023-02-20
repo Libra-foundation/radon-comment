@@ -30,3 +30,7 @@ export interface CCEntry {
 
 /** @see {IsCCReport} ts-auto-guard:type-guard */
 export type CCReport = Record<string,Array<CCEntry>>
+
+export interface Tree<T> {
+    [x: string]: T | Tree<T>;
+}
