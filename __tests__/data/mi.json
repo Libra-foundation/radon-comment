@@ -1,1 +1,12 @@
-{"src/__init__.py": {"mi": 100.0, "rank": "A"}, "src/cvrp/constraints_validators.py": {"mi": 70.77466455020027, "rank": "A"}, "src/cvrp/ecvrp.py": {"mi": 40.18983591793782, "rank": "A"}, "src/cvrp/ga.py": {"mi": 69.53246439160942, "rank": "A"}, "src/cvrp/individual.py": {"mi": 100.0, "rank": "A"}, "src/cvrp/json_io.py": {"mi": 79.17277955298528, "rank": "A"}, "src/cvrp/__init__.py": {"mi": 100.0, "rank": "A"}, "src/server/main.py": {"mi": 56.35866906525636, "rank": "A"}, "src/server/__init__.py": {"mi": 100.0, "rank": "A"}, "src/server/utils/utils.py": {"mi": 63.38160937836786, "rank": "A"}}
+{
+  "src/__init__.py": {"mi": 100.0, "rank": "A"},
+  "src/cvrp/constraints_validators.py": {"mi": 70.77466455020027, "rank": "A"},
+  "src/cvrp/ecvrp.py": {"mi": 40.18983591793782, "rank": "A"},
+  "src/cvrp/ga.py": {"mi": 69.53246439160942, "rank": "A"},
+  "src/cvrp/individual.py": {"mi": 100.0, "rank": "A"},
+  "src/cvrp/json_io.py": {"mi": 79.17277955298528, "rank": "A"},
+  "src/cvrp/__init__.py": {"mi": 100.0, "rank": "A"},
+  "src/server/main.py": {"mi": 56.35866906525636, "rank": "A"},
+  "src/server/__init__.py": {"mi": 100.0, "rank": "A"},
+  "src/server/utils/utils.py": {"mi": 63.38160937836786, "rank": "A"}
+}
