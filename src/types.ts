@@ -18,7 +18,7 @@ export interface CCEntry {
     type: RadonType ,
     rank: RadonRank,
     name: string,
-    // eslint-disable-next-line @typescript-eslint/naming-convention -- Radon chose the name, not me.
+    // eslint-disable-next-line @typescript-eslint/naming-convention -- Radon chosed the name, not me.
     col_offset: number,
     complexity: number,
     endline: number,
@@ -29,7 +29,16 @@ export interface CCEntry {
 }
 
 /** @see {IsCCReport} ts-auto-guard:type-guard */
-export type CCReport = Record<string,Array<CCEntry>>
+export type CCReport = Record<string, Array<CCEntry>>
+
+/** @see {IsHalEntry} ts-auto-guard:type-guard */
+export interface HalEntry {
+    total: Array<number> ,
+    functions: Array<Array<number | string>>
+}
+
+/** @see {IsHalReport} ts-auto-guard:type-guard */
+export type HalReport = Record<string, HalEntry>
 
 export interface Tree<T> {
     [x: string]: T | Tree<T>;

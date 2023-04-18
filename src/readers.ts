@@ -1,8 +1,8 @@
 import fs from "fs"
 import path from "path"
 
-import { type CCReport } from "./types";
-import {IsCCReport} from "./types.guard";
+import { type CCReport, type HalReport } from "./types";
+import {IsCCReport, IsHalReport} from "./types.guard";
 
 type Reader<T> = (path:string)=> Promise<T>
 
@@ -25,4 +25,6 @@ function ReaderFactory<T>(checker : (obj:unknown)=>obj is T): Reader<T>{
         throw new Error("Parsing Error: The data found in the provided file does not has the expected structure.");
     }
 }
+
 export const CCReader:Reader<CCReport> = ReaderFactory<CCReport>(IsCCReport);
+export const HalReader:Reader<HalReport> = ReaderFactory<HalReport>(IsHalReport);
