@@ -34,7 +34,7 @@ export type CCReport = Record<string, Array<CCEntry>>
 /** @see {IsHalEntry} ts-auto-guard:type-guard */
 export interface HalEntry {
     total: Array<number> ,
-    functions: Array<Array<number | string>>
+    functions: Array<Array<Array<number> | string>>
 }
 
 /** @see {IsHalReport} ts-auto-guard:type-guard */

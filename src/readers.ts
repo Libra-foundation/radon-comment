@@ -6,6 +6,12 @@ import {IsCCReport, IsHalReport} from "./types.guard";
 
 type Reader<T> = (path:string)=> Promise<T>
 
+/**This factory builds readers wich reads data from a JSON file and then safely convert it to the type T
+ * This reader will use the given checker to ensure the data integrity.
+ * 
+ * @param checker A predicate function able to tell wheter an object of type unkown can be safly cated to T or no.
+ * @returns A valid reader for the type T
+ */
 function ReaderFactory<T>(checker : (obj:unknown)=>obj is T): Reader<T>{
     return async (cc_path:string): Promise<T> => {
         const RESOLVED:string = path.resolve(cc_path);

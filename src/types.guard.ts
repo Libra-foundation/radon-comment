@@ -66,7 +66,10 @@ export function IsHalEntry(obj: unknown): obj is HalEntry {
             Array.isArray(e) &&
             e.every((e: any) =>
             (typeof e === "string" ||
-                typeof e === "number")
+                Array.isArray(e) &&
+                e.every((e: any) =>
+                    typeof e === "number"
+                ))
             )
         )
     )
