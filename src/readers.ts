@@ -1,8 +1,8 @@
 import fs from "fs"
 import path from "path"
 
-import { type CCReport, type HalReport } from "./types";
-import {IsCCReport, IsHalReport} from "./types.guard";
+import { type MIReport, type CCReport, type HalReport } from "./types";
+import {IsCCReport, IsHalReport, IsMIReport} from "./types.guard";
 
 type Reader<T> = (path:string)=> Promise<T>
 
@@ -34,3 +34,4 @@ function ReaderFactory<T>(checker : (obj:unknown)=>obj is T): Reader<T>{
 
 export const CCReader:Reader<CCReport> = ReaderFactory<CCReport>(IsCCReport);
 export const HalReader:Reader<HalReport> = ReaderFactory<HalReport>(IsHalReport);
+export const MIReader:Reader<MIReport> = ReaderFactory<MIReport>(IsMIReport);

@@ -2,7 +2,7 @@
  * Generated type guards for "types.ts".
  * WARNING: Do not manually change this file.
  */
-import { RadonType, RadonRank, CCEntry, CCReport, HalEntry, HalReport } from "./types";
+import { RadonType, RadonRank, CCEntry, CCReport, HalEntry, HalReport, MIEntry, MIReport } from "./types";
 
 export function IsCCEntry(obj: unknown): obj is CCEntry {
     const typedObj = obj as CCEntry
@@ -83,6 +83,34 @@ export function IsHalReport(obj: unknown): obj is HalReport {
             typeof typedObj === "function") &&
         Object.entries<any>(typedObj)
             .every(([key, value]) => (IsHalEntry(value) as boolean &&
+                typeof key === "string"))
+    )
+}
+
+export function IsMIEntry(obj: unknown): obj is MIEntry {
+    const typedObj = obj as MIEntry
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typeof typedObj["mi"] === "number" &&
+        (typedObj["rank"] === RadonRank.A ||
+            typedObj["rank"] === RadonRank.B ||
+            typedObj["rank"] === RadonRank.C ||
+            typedObj["rank"] === RadonRank.D ||
+            typedObj["rank"] === RadonRank.E ||
+            typedObj["rank"] === RadonRank.F)
+    )
+}
+
+export function IsMIReport(obj: unknown): obj is MIReport {
+    const typedObj = obj as MIReport
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        Object.entries<any>(typedObj)
+            .every(([key, value]) => (IsMIEntry(value) as boolean &&
                 typeof key === "string"))
     )
 }

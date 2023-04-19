@@ -40,6 +40,15 @@ export interface HalEntry {
 /** @see {IsHalReport} ts-auto-guard:type-guard */
 export type HalReport = Record<string, HalEntry>
 
+/** @see {IsMIEntry} ts-auto-guard:type-guard */
+export interface MIEntry {
+    mi: number,
+    rank: RadonRank
+}
+
+/** @see {IsMIReport} ts-auto-guard:type-guard */
+export type MIReport = Record<string, MIEntry>
+
 export interface Tree<T> {
     [x: string]: T | Tree<T>;
 }
