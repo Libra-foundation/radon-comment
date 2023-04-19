@@ -28,17 +28,11 @@ export interface CCEntry {
     closures?: Array<unknown>
 }
 
-/** @see {IsCCReport} ts-auto-guard:type-guard */
-export type CCReport = Record<string, Array<CCEntry>>
-
 /** @see {IsHalEntry} ts-auto-guard:type-guard */
 export interface HalEntry {
     total: Array<number> ,
     functions: Array<Array<Array<number> | string>>
 }
-
-/** @see {IsHalReport} ts-auto-guard:type-guard */
-export type HalReport = Record<string, HalEntry>
 
 /** @see {IsMIEntry} ts-auto-guard:type-guard */
 export interface MIEntry {
@@ -46,8 +40,16 @@ export interface MIEntry {
     rank: RadonRank
 }
 
+export type Report<T> = Record<string, T>
+
+/** @see {IsCCReport} ts-auto-guard:type-guard */
+export type CCReport = Report<Array<CCEntry>>
+
+/** @see {IsHalReport} ts-auto-guard:type-guard */
+export type HalReport = Report<HalEntry>
+
 /** @see {IsMIReport} ts-auto-guard:type-guard */
-export type MIReport = Record<string, MIEntry>
+export type MIReport = Report<MIEntry>
 
 export interface Tree<T> {
     [x: string]: T | Tree<T>;

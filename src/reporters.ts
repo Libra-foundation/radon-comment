@@ -1,4 +1,4 @@
-import { type CCReport, type CCEntry, type Tree, RadonType, RadonRank } from "./types";
+import { type CCReport, type CCEntry, type Tree, RadonType, RadonRank, type Report } from "./types";
 import * as path from "path"
 
 const PATH_ENDS: Array<string> = [
@@ -15,6 +15,45 @@ function TreeMerge<T>(first: Tree<T>, second: Readonly<Tree<T>>):void{
             first[KEY] = second[KEY]
         }
     }
+}
+
+/**Convert a report into a Tree of its entries. The tree represent the folder architecture of the project.
+ * The leafs of the trees are the sets of entries which correspond to the files in the corresponding folder.
+ * 
+ * @param data The report to convert.
+ */
+function ToTrees<T> (data: Readonly<Report<T>>): Array<Tree<T>> {
+    type TreeType = Tree<T>;
+    const TREES: Array<TreeType> = [];
+    const ROOT_MAP: Record<string, TreeType> = {};
+
+    let current_tree: TreeType = {};
+    let temp_tree: TreeType = {};
+    let current_name:string = "";
+    for (const F_NAME in data) {
+        current_tree = {};
+
+        current_tree[path.basename(F_NAME)] = data[F_NAME];
+        current_name = path.dirname(F_NAME);
+
+        while (!PATH_ENDS.includes(current_name)) {
+            temp_tree = {};
+            temp_tree[path.basename(current_name)] = current_tree;
+            current_tree = temp_tree;
+            current_name = path.dirname(F_NAME)
+
+        }
+    }
+
+    // To Rework
+    if(Object.keys(current_tree)[0] in ROOT_MAP){
+        TreeMerge(ROOT_MAP[Object.keys(current_tree)[0]],current_tree)
+    }else {
+        TREES.push(current_tree)
+        ROOT_MAP[Object.keys(current_tree)[0]] = current_tree
+    }
+
+    return TREES;
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- Almost impossible to make readonly and still being useful.
