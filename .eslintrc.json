@@ -176,19 +176,18 @@
         ],
         "format": ["camelCase"],
         "leadingUnderscore": "forbid",
-        "trailingUnderscore": "forbid"
+        "trailingUnderscore": "forbid",
+        "prefix": []
       },
       {
         "selector": [
-          "classMethod",
-          "typeMethod",
           "classProperty",
           "typeProperty",
           "parameterProperty"
         ],
         "format": ["PascalCase"],
         "types": ["boolean"],
-        "prefix": ["is"],
+        "prefix": ["is", "has"],
         "leadingUnderscore": "forbid",
         "trailingUnderscore": "forbid"
       },
@@ -202,7 +201,7 @@
         "selector": ["parameter", "variable"],
         "format": ["snake_case"],
         "types": ["boolean"],
-        "prefix": ["is_"],
+        "prefix": ["is_", "has_"],
         "leadingUnderscore": "forbid",
         "trailingUnderscore": "forbid"
       },

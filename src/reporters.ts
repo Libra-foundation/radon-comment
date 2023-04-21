@@ -1,4 +1,5 @@
-import { type CCReport, type CCEntry, type Tree, RadonType, RadonRank, type Report } from "./types";
+import { type CCReport, type CCEntry, RadonType, RadonRank, type Report } from "./types";
+import { Tree } from "./tree";
 import * as path from "path"
 
 const PATH_ENDS: Array<string> = [
@@ -6,22 +7,7 @@ const PATH_ENDS: Array<string> = [
     "/"
 ]
 
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- I am mutating an argument
-function TreeMerge<T>(first: Tree<T>, second: Readonly<Tree<T>>):void{
-    for (const KEY in second){
-        if (KEY in first){
-            TreeMerge(first[KEY] as Tree<T>, second[KEY] as Tree<T>);
-        } else {
-            first[KEY] = second[KEY]
-        }
-    }
-}
-
-/**Convert a report into a Tree of its entries. The tree represent the folder architecture of the project.
- * The leafs of the trees are the sets of entries which correspond to the files in the corresponding folder.
- * 
- * @param data The report to convert.
- */
+/*/*
 function ToTrees<T> (data: Readonly<Report<T>>): Array<Tree<T>> {
     type TreeType = Tree<T>;
     const TREES: Array<TreeType> = [];
@@ -45,46 +31,67 @@ function ToTrees<T> (data: Readonly<Report<T>>): Array<Tree<T>> {
         }
     }
 
-    // To Rework
-    if(Object.keys(current_tree)[0] in ROOT_MAP){
-        TreeMerge(ROOT_MAP[Object.keys(current_tree)[0]],current_tree)
-    }else {
-        TREES.push(current_tree)
-        ROOT_MAP[Object.keys(current_tree)[0]] = current_tree
+    for (const KEY in current_tree){
+        if (KEY in ROOT_MAP){
+            TreeMerge(ROOT_MAP[KEY], current_tree)
+        } else {
+            TREES.push(current_tree)
+            ROOT_MAP[KEY] = current_tree
+        }
     }
 
     return TREES;
-}
+}*/
 
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- Almost impossible to make readonly and still being useful.
-function ToTree (data: Readonly<CCReport>) : Array<Tree<Array<CCEntry>>> {
-    const TREES: Array<Tree<Array<CCEntry>>> = [];
-    const ROOT_MAP: Record<string,Tree<Array<CCEntry>>> = {}
-    for (const F_NAME in data){
-        let tree: Tree<Array<CCEntry>> = {};
-        let temp_tree: Tree<Array<CCEntry>> = {};
 
-        tree[path.basename(F_NAME)] = data[F_NAME]
+class ReportTree<T> extends Tree<T> {
 
-        let current_name:string = path.dirname(F_NAME);
+    public static from<T>(report :Report<T>) : ReportTree<T>{
+        const TREE = new ReportTree<T>()
 
-        while (!PATH_ENDS.includes(current_name)){
-            temp_tree[path.basename(current_name)] = tree;
-            tree = temp_tree;
-            temp_tree = {};
-            current_name = path.dirname(current_name)
+        let current_tree: ReportTree<T>;
+        let temp_tree: ReportTree<T> = new ReportTree<T>();
+        let current_name: string = "";
+
+        for (const F_NAME in report) {
+            current_tree  = new ReportTree<T>();
+    
+            current_tree.set(path.basename(F_NAME), report[F_NAME]);
+            current_name = path.dirname(F_NAME);
+    
+            while (!PATH_ENDS.includes(current_name)) {
+                temp_tree = new ReportTree<T>();
+                temp_tree.set(path.basename(current_name), current_tree);
+                current_tree = temp_tree;
+                current_name = path.dirname(F_NAME)
+            }
+
+            TREE.merge(current_tree);
+
         }
 
-        if(Object.keys(tree)[0] in ROOT_MAP){
-            TreeMerge(ROOT_MAP[Object.keys(tree)[0]],tree)
-        }else {
-            TREES.push(tree)
-            ROOT_MAP[Object.keys(tree)[0]] = tree
-        }
-
+        return TREE;
     }
-    return TREES
 }
+
+
+/*
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- I am mutating an argument
+function TreeMerge<T>(first: Tree<T>, second: Readonly<Tree<T>>):void{
+    for (const KEY in second){
+        if (KEY in first){
+            TreeMerge(first[KEY] as Tree<T>, second[KEY] as Tree<T>);
+        } else {
+            first[KEY] = second[KEY]
+        }
+    }
+}
+
+/**Convert a report into a Tree of its entries. The tree represent the folder architecture of the project.
+ * The leafs of the trees are the sets of entries which correspond to the files in the corresponding folder.
+ * 
+ * @param data The report to convert.
+ *//*
 
 function GetComplexityRank(complexity :number): RadonRank{
     // Radon has a better way of doing this. I don't know how to cleanly copy their way of working.
@@ -104,7 +111,7 @@ function GetComplexityRank(complexity :number): RadonRank{
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- Almost impossible to make readonly and still being useful.
-function ReportTree(data: Readonly<Tree<Array<CCEntry>>>): string {
+function ReportTree2(data: Readonly<Tree<Array<CCEntry>>>): string {
     let output: string = "";
     let key: string = "";
     let table: string = "";
@@ -179,7 +186,7 @@ function ReportTree(data: Readonly<Tree<Array<CCEntry>>>): string {
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- Almost impossible to make readonly and still being useful.
 export function CCReporter(data: Readonly<CCReport>): string{
-    const TREES: Array<Tree<Array<CCEntry>>> = ToTree(data);
+    const TREES: Array<Tree<Array<CCEntry>>> = ToTrees(data);
 
     let output:string = "";
 
@@ -191,9 +198,9 @@ export function CCReporter(data: Readonly<CCReport>): string{
 }
 
 export interface TypeOfTest {
-    ToTree : typeof ToTree;
+    ToTrees : typeof ToTrees;
 }
 
 export const TEST:TypeOfTest|null  = process.env.NODE_ENV?.toUpperCase() === 'TEST'
-    ? {ToTree}
+    ? {ToTrees}
     : null
