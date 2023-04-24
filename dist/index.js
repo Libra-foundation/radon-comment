@@ -38,21 +38,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(186));
-const params_1 = __importDefault(__nccwpck_require__(65));
-const readers_1 = __nccwpck_require__(414);
-const { HAS_CC, CC_PATH } = params_1.default;
+const wait_1 = __nccwpck_require__(817);
 function Run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            if (HAS_CC) {
-                const CC = yield (0, readers_1.CCReader)(CC_PATH);
-                void CC;
-            }
+            const MS = core.getInput("milliseconds");
+            core.debug(`Waiting ${MS} milliseconds ...`); // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
+            core.debug(new Date().toTimeString());
+            yield (0, wait_1.Wait)(parseInt(MS, 10));
+            core.debug(new Date().toTimeString());
             core.setOutput("time", new Date().toTimeString());
         }
         catch (error) {
@@ -66,50 +62,8 @@ void Run();
 
 /***/ }),
 
-/***/ 65:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core = __importStar(__nccwpck_require__(186));
-const IS_TESTING = process.env.NODE_ENV === 'test';
-const CC_PATH = IS_TESTING ? core.getInput('cc') : "__test__/data/cc.json";
-const HAS_CC = CC_PATH === "";
-exports["default"] = {
-    IS_TESTING,
-    CC_PATH,
-    HAS_CC
-};
-
-
-/***/ }),
-
-/***/ 414:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+/***/ 817:
+/***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
 
@@ -122,115 +76,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.CCReader = void 0;
-const fs_1 = __importDefault(__nccwpck_require__(147));
-const path_1 = __importDefault(__nccwpck_require__(17));
-const types_guard_1 = __nccwpck_require__(292);
-function CCReader(cc_path) {
+exports.Wait = void 0;
+function Wait(milliseconds) {
     return __awaiter(this, void 0, void 0, function* () {
-        const RESOLVED = path_1.default.resolve(cc_path);
-        let data = undefined;
-        try {
-            data = JSON.parse(yield fs_1.default.promises.readFile(RESOLVED, { encoding: "utf-8" }));
-        }
-        catch (err) {
-            if (err instanceof SyntaxError) {
-                throw err;
+        return yield new Promise(resolve => {
+            if (isNaN(milliseconds)) {
+                throw new Error("milliseconds not a number");
             }
-            throw new Error(`Error: Unable to read the file ${RESOLVED}`);
-        }
-        if ((0, types_guard_1.IsCCReport)(data)) {
-            return data;
-        }
-        throw new Error("Parsing Error: The data found in the provided file does not has the expected structure.");
+            setTimeout(() => { resolve("done!"); }, milliseconds);
+        });
     });
 }
-exports.CCReader = CCReader;
-
-
-/***/ }),
-
-/***/ 292:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.IsCCReport = exports.IsCCEntry = void 0;
-/*
- * Generated type guards for "types.d.ts".
- * WARNING: Do not manually change this file.
- */
-const types_1 = __nccwpck_require__(164);
-function IsCCEntry(obj) {
-    const typedObj = obj;
-    return ((typedObj !== null &&
-        typeof typedObj === "object" ||
-        typeof typedObj === "function") &&
-        (typedObj["type"] === types_1.RadonType.C ||
-            typedObj["type"] === types_1.RadonType.M ||
-            typedObj["type"] === types_1.RadonType.F) &&
-        (typedObj["rank"] === types_1.RadonRank.A ||
-            typedObj["rank"] === types_1.RadonRank.B ||
-            typedObj["rank"] === types_1.RadonRank.C ||
-            typedObj["rank"] === types_1.RadonRank.D ||
-            typedObj["rank"] === types_1.RadonRank.E ||
-            typedObj["rank"] === types_1.RadonRank.F) &&
-        typeof typedObj["name"] === "string" &&
-        typeof typedObj["col_offset"] === "number" &&
-        typeof typedObj["complexity"] === "number" &&
-        typeof typedObj["endline"] === "number" &&
-        typeof typedObj["lineno"] === "number" &&
-        (typeof typedObj["methods"] === "undefined" ||
-            Array.isArray(typedObj["methods"]) &&
-                typedObj["methods"].every((e) => IsCCEntry(e))) &&
-        (typeof typedObj["classname"] === "undefined" ||
-            typeof typedObj["classname"] === "string") &&
-        (typeof typedObj["closures"] === "undefined" ||
-            Array.isArray(typedObj["closures"])));
-}
-exports.IsCCEntry = IsCCEntry;
-function IsCCReport(obj) {
-    const typedObj = obj;
-    return ((typedObj !== null &&
-        typeof typedObj === "object" ||
-        typeof typedObj === "function") &&
-        Object.entries(typedObj)
-            .every(([key, value]) => (Array.isArray(value) &&
-            value.every((e) => IsCCEntry(e)) &&
-            typeof key === "string")));
-}
-exports.IsCCReport = IsCCReport;
-
-
-/***/ }),
-
-/***/ 164:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.RadonRank = exports.RadonType = void 0;
-var RadonType;
-(function (RadonType) {
-    RadonType["C"] = "class";
-    RadonType["M"] = "method";
-    RadonType["F"] = "function";
-})(RadonType = exports.RadonType || (exports.RadonType = {}));
-var RadonRank;
-(function (RadonRank) {
-    RadonRank["A"] = "A";
-    RadonRank["B"] = "B";
-    RadonRank["C"] = "C";
-    RadonRank["D"] = "D";
-    RadonRank["E"] = "E";
-    RadonRank["F"] = "F";
-})(RadonRank = exports.RadonRank || (exports.RadonRank = {}));
+exports.Wait = Wait;
 
 
 /***/ }),
