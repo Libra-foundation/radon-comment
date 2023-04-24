@@ -46,8 +46,8 @@ function ToTrees<T> (data: Readonly<Report<T>>): Array<Tree<T>> {
 
 class ReportTree<T> extends Tree<T> {
 
-    public static from<T>(report :Report<T>) : ReportTree<T>{
-        const TREE = new ReportTree<T>()
+    public static from<T>(report :Readonly<Report<T>>) : ReportTree<T>{
+        const TREE:ReportTree<T> = new ReportTree<T>()
 
         let current_tree: ReportTree<T>;
         let temp_tree: ReportTree<T> = new ReportTree<T>();
@@ -63,7 +63,7 @@ class ReportTree<T> extends Tree<T> {
                 temp_tree = new ReportTree<T>();
                 temp_tree.set(path.basename(current_name), current_tree);
                 current_tree = temp_tree;
-                current_name = path.dirname(F_NAME)
+                current_name = path.dirname(current_name)
             }
 
             TREE.merge(current_tree);
@@ -196,11 +196,14 @@ export function CCReporter(data: Readonly<CCReport>): string{
 
     return output
 }
+*/
 
+/* eslint-disable @typescript-eslint/naming-convention -- The test interface only map existing tokens. Name checking isn't needed there. */
 export interface TypeOfTest {
-    ToTrees : typeof ToTrees;
+    ReportTree : typeof ReportTree;
 }
+/* eslint-enable @typescript-eslint/naming-convention */
 
 export const TEST:TypeOfTest|null  = process.env.NODE_ENV?.toUpperCase() === 'TEST'
-    ? {ToTrees}
+    ? {ReportTree}
     : null

@@ -1,10 +1,10 @@
 import {describe, test, expect, beforeAll} from "@jest/globals";
 import {CCReader} from "../src/readers";
-import type { CCEntry, CCReport, Tree } from "../src/types";
-import { TEST , type TypeOfTest, CCReporter} from "../src/reporters"
-import { assert } from "console";
+import type { CCEntry, CCReport } from "../src/types";
+import { TEST , type TypeOfTest} from "../src/reporters";
+import { IsTree} from "../src/tree";
 
-const {ToTrees} = TEST as TypeOfTest;
+const {ReportTree} = TEST as TypeOfTest;
 
 describe("Reporters tests", () => {
     let data: CCReport;
@@ -14,28 +14,50 @@ describe("Reporters tests", () => {
     })
     
     test("CC Reporter -- Tree building",()=> {
-        const TREES = ToTrees(data);
-        expect(TREES).toBeDefined();
+        const TREE = ReportTree.from<Array<CCEntry>>(data);
+        expect(TREE).toBeDefined();
 
-        expect(TREES).toHaveLength(1);
+        expect(TREE.get).toBeDefined()
+        expect(TREE.has).toBeDefined()
 
-        const SRC: Tree<Array<CCEntry>> = TREES[0];
+        console.log("Root Tree nodes :")
+        for (const ENTRY of TREE) {
+            console.log(ENTRY)
+        }
+        expect(TREE.has('src')).toBe(true)
+        expect(TREE.has('cvrp')).toBe(false)
 
-        expect(SRC).toHaveProperty("src")
-        expect(SRC).not.toHaveProperty("cvrp")
-        console.log(Object.keys(SRC))
 
-        expect(SRC.src).toHaveProperty("cvrp")
-        console.log(Object.keys(SRC.src))
+        expect(IsTree<typeof TREE>(TREE.get('src'))).toBe(true)
 
-        expect(Object.keys((SRC.src as typeof SRC).cvrp)).toHaveLength(5)
-        assert(false)
+        const SRC: typeof TREE = TREE.get('src') as typeof TREE;
+
+        console.log("Src Tree nodes :")
+        for (const ENTRY of SRC) {
+            console.log(ENTRY)
+        }
+
+        expect(SRC.has('src')).toBe(false)
+        expect(SRC.has('cvrp')).toBe(true)
+
+        expect(IsTree<typeof SRC>(SRC.get('cvrp'))).toBe(true)
+
+        let counter = 0;
+        console.log("Cvrp Tree nodes :")
+        for (const ENTRY of SRC.get('cvrp')) {
+            console.log(ENTRY)
+            counter += 1;
+        }
+
+        expect(counter).toBe(5);
     });
 
+    /* Temporary disable
     test("CC Reporter -- Report is created", ()=>{
         const REPORT = CCReporter(data);
         expect(REPORT).toBeDefined();
     })
+    */
 
 
 })

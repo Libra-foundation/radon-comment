@@ -1,4 +1,4 @@
-function IsTree<T>(obj:unknown): obj is Tree<T>{
+export function IsTree<T extends Tree<any>>(obj:unknown): obj is T{
     if (obj === null) {
         return false;
     }
@@ -16,10 +16,12 @@ export class Tree<T> implements Iterable<string>{
     protected readonly CHILDS: Record<string, T | this> = {}
 
     public merge(other: Readonly<this>):void {
-        for (const KEY in other){
+        let tree: unknown;
+        for (const KEY of other){
             if (KEY in this){
-                if (IsTree<T>(this.CHILDS[KEY])){
-                    (this.CHILDS[KEY] as this ).merge(other.get(KEY) as this);
+                tree = this.CHILDS[KEY]
+                if (IsTree<this>(tree)){
+                    tree.merge(other.get(KEY) as this);
                 } else {
                     this.set(KEY , other.get(KEY) as T | this);
                 }
