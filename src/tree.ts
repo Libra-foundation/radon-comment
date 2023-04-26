@@ -18,7 +18,7 @@ export class Tree<T> implements Iterable<string>{
     public merge(other: Readonly<this>):void {
         let tree: unknown;
         for (const KEY of other){
-            if (KEY in this){
+            if (KEY in this.CHILDS){
                 tree = this.CHILDS[KEY]
                 if (IsTree<this>(tree)){
                     tree.merge(other.get(KEY) as this);
