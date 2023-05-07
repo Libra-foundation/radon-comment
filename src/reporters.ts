@@ -1,48 +1,11 @@
 import { type CCReport, type CCEntry, RadonType, RadonRank, type Report } from "./types";
-import { Tree } from "./tree";
+import { IsTree, Tree } from "./tree";
 import * as path from "path"
 
 const PATH_ENDS: Array<string> = [
     ".",
     "/"
 ]
-
-/*/*
-function ToTrees<T> (data: Readonly<Report<T>>): Array<Tree<T>> {
-    type TreeType = Tree<T>;
-    const TREES: Array<TreeType> = [];
-    const ROOT_MAP: Record<string, TreeType> = {};
-
-    let current_tree: TreeType = {};
-    let temp_tree: TreeType = {};
-    let current_name:string = "";
-    for (const F_NAME in data) {
-        current_tree = {};
-
-        current_tree[path.basename(F_NAME)] = data[F_NAME];
-        current_name = path.dirname(F_NAME);
-
-        while (!PATH_ENDS.includes(current_name)) {
-            temp_tree = {};
-            temp_tree[path.basename(current_name)] = current_tree;
-            current_tree = temp_tree;
-            current_name = path.dirname(F_NAME)
-
-        }
-    }
-
-    for (const KEY in current_tree){
-        if (KEY in ROOT_MAP){
-            TreeMerge(ROOT_MAP[KEY], current_tree)
-        } else {
-            TREES.push(current_tree)
-            ROOT_MAP[KEY] = current_tree
-        }
-    }
-
-    return TREES;
-}*/
-
 
 class ReportTree<T> extends Tree<T> {
 
@@ -72,20 +35,28 @@ class ReportTree<T> extends Tree<T> {
 
         return TREE;
     }
+
+    public toString() : string {
+
+        let output : string = "";
+
+        output += "Report\n";
+
+        for (const CHILD_NAME of this) {
+            const CHILD: T | this = this.get(CHILD_NAME);
+            if (IsTree(CHILD)){
+                output += CHILD.toString()
+            } else {
+                output += "A string reprsentation of a report";
+            }
+        }
+
+        return output;
+    }
 }
 
 
 /*
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- I am mutating an argument
-function TreeMerge<T>(first: Tree<T>, second: Readonly<Tree<T>>):void{
-    for (const KEY in second){
-        if (KEY in first){
-            TreeMerge(first[KEY] as Tree<T>, second[KEY] as Tree<T>);
-        } else {
-            first[KEY] = second[KEY]
-        }
-    }
-}
 
 /**Convert a report into a Tree of its entries. The tree represent the folder architecture of the project.
  * The leafs of the trees are the sets of entries which correspond to the files in the corresponding folder.

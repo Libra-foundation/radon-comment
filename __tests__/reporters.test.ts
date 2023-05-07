@@ -20,10 +20,10 @@ describe("Reporters tests", () => {
         expect(TREE.get).toBeDefined()
         expect(TREE.has).toBeDefined()
 
-        console.log("Root Tree nodes :")
+        /* console.log("Root Tree nodes :")
         for (const ENTRY of TREE) {
             console.log(ENTRY)
-        }
+        }*/
         expect(TREE.has('src')).toBe(true)
         expect(TREE.has('cvrp')).toBe(false)
 
@@ -32,10 +32,10 @@ describe("Reporters tests", () => {
 
         const SRC: typeof TREE = TREE.get('src') as typeof TREE;
 
-        console.log("Src Tree nodes :")
+        /*console.log("Src Tree nodes :")
         for (const ENTRY of SRC) {
             console.log(ENTRY)
-        }
+        }*/
 
         expect(SRC.has('src')).toBe(false)
         expect(SRC.has('cvrp')).toBe(true)
@@ -43,9 +43,10 @@ describe("Reporters tests", () => {
         expect(IsTree<typeof SRC>(SRC.get('cvrp'))).toBe(true)
 
         let counter = 0;
-        console.log("Cvrp Tree nodes :")
+        // console.log("Cvrp Tree nodes :")
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars -- Iterations is kinda needed.
         for (const ENTRY of SRC.get('cvrp')) {
-            console.log(ENTRY)
+            // console.log(ENTRY)
             counter += 1;
         }
 

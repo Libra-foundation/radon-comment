@@ -50,7 +50,3 @@ export type HalReport = Report<HalEntry>
 
 /** @see {IsMIReport} ts-auto-guard:type-guard */
 export type MIReport = Report<MIEntry>
-
-export interface Tree<T> {
-    [x: string]: T | Tree<T>;
-}
