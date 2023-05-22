@@ -2,7 +2,7 @@
  * Generated type guards for "types.ts".
  * WARNING: Do not manually change this file.
  */
-import { RadonType, RadonRank, CCEntry, CCReport, HalEntry, HalReport, MIEntry, MIReport } from "./types";
+import { RadonType, RadonRank, CCEntry, HalEntry, MIEntry, CCReport, HalReport, MIReport, IToString, IToMD } from "./types";
 
 export function IsCCEntry(obj: unknown): obj is CCEntry {
     const typedObj = obj as CCEntry
@@ -36,21 +36,6 @@ export function IsCCEntry(obj: unknown): obj is CCEntry {
     )
 }
 
-export function IsCCReport(obj: unknown): obj is CCReport {
-    const typedObj = obj as CCReport
-    return (
-        (typedObj !== null &&
-            typeof typedObj === "object" ||
-            typeof typedObj === "function") &&
-        Object.entries<any>(typedObj)
-            .every(([key, value]) => (Array.isArray(value) &&
-                value.every((e: any) =>
-                    IsCCEntry(e) as boolean
-                ) &&
-                typeof key === "string"))
-    )
-}
-
 export function IsHalEntry(obj: unknown): obj is HalEntry {
     const typedObj = obj as HalEntry
     return (
@@ -75,18 +60,6 @@ export function IsHalEntry(obj: unknown): obj is HalEntry {
     )
 }
 
-export function IsHalReport(obj: unknown): obj is HalReport {
-    const typedObj = obj as HalReport
-    return (
-        (typedObj !== null &&
-            typeof typedObj === "object" ||
-            typeof typedObj === "function") &&
-        Object.entries<any>(typedObj)
-            .every(([key, value]) => (IsHalEntry(value) as boolean &&
-                typeof key === "string"))
-    )
-}
-
 export function IsMIEntry(obj: unknown): obj is MIEntry {
     const typedObj = obj as MIEntry
     return (
@@ -103,6 +76,33 @@ export function IsMIEntry(obj: unknown): obj is MIEntry {
     )
 }
 
+export function IsCCReport(obj: unknown): obj is CCReport {
+    const typedObj = obj as CCReport
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        Object.entries<any>(typedObj)
+            .every(([key, value]) => (Array.isArray(value) &&
+                value.every((e: any) =>
+                    IsCCEntry(e) as boolean
+                ) &&
+                typeof key === "string"))
+    )
+}
+
+export function IsHalReport(obj: unknown): obj is HalReport {
+    const typedObj = obj as HalReport
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        Object.entries<any>(typedObj)
+            .every(([key, value]) => (IsHalEntry(value) as boolean &&
+                typeof key === "string"))
+    )
+}
+
 export function IsMIReport(obj: unknown): obj is MIReport {
     const typedObj = obj as MIReport
     return (
@@ -112,5 +112,25 @@ export function IsMIReport(obj: unknown): obj is MIReport {
         Object.entries<any>(typedObj)
             .every(([key, value]) => (IsMIEntry(value) as boolean &&
                 typeof key === "string"))
+    )
+}
+
+export function IsIToString(obj: unknown): obj is IToString {
+    const typedObj = obj as IToString
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typeof typedObj["toString"] === "function"
+    )
+}
+
+export function IsIToMD(obj: unknown): obj is IToMD {
+    const typedObj = obj as IToMD
+    return (
+        (typedObj !== null &&
+            typeof typedObj === "object" ||
+            typeof typedObj === "function") &&
+        typeof typedObj["toMD"] === "function"
     )
 }

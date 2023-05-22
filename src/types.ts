@@ -50,3 +50,15 @@ export type HalReport = Report<HalEntry>
 
 /** @see {IsMIReport} ts-auto-guard:type-guard */
 export type MIReport = Report<MIEntry>
+
+/** @see {IsIToString} ts-auto-guard:type-guard */
+export interface IToString {
+    // eslint-disable-next-line @typescript-eslint/naming-convention -- Built-in method.
+    toString: () => string;
+}
+
+/** @see {IsIToMD} ts-auto-guard:type-guard */
+export interface IToMD {
+    //eslint-disable-next-line @typescript-eslint/naming-convention -- Functions should not be PascalCase that's a bug. 
+    toMD: () => string;
+}
