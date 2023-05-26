@@ -7,8 +7,8 @@ const PATH_ENDS: Array<string> = [
     ".",
     "/"
 ]
-
-class Column<T extends IToMD|IToString> {
+// TODO : refactor to ease exposition
+export class Column<T extends IToMD|IToString> {
     public header: string;
     protected data: Array<T> = [];
 
@@ -20,6 +20,7 @@ class Column<T extends IToMD|IToString> {
         this.data.push(...values);
     }
 
+    //TODO : TEST
     public [Symbol.iterator]():Iterator<T> {
         return this.data[Symbol.iterator]()
     }
@@ -33,8 +34,8 @@ class Column<T extends IToMD|IToString> {
     }
 
 }
-
-class Table<T extends IToMD|IToString> implements IToMD {
+// TODO : refactor to ease exposition
+export class Table<T extends IToMD|IToString> implements IToMD {
 
     protected readonly DATA: Map<string, Column<T>> = new Map<string, Column<T>>();
 
@@ -45,6 +46,12 @@ class Table<T extends IToMD|IToString> implements IToMD {
         }
     }
 
+    //TODO : TEST
+    public get (name:string): Column<T> | undefined {
+        return this.DATA.get(name)
+    }
+
+    //TODO : TEST
     public *[Symbol.iterator]():Iterator<Array<T>> {
         const COLUMNS : Array<Column<T>> = Array.from(this.DATA).map(v => v[1]);
         const LENGTH:number = Math.min(...COLUMNS.map(c => c.length));
@@ -54,6 +61,7 @@ class Table<T extends IToMD|IToString> implements IToMD {
         }
     }
 
+    //TODO : TEST
     public toMD ():string {
         let output: string = "";
         
@@ -112,24 +120,34 @@ class ReportTree<T> extends Tree<T> {
         return TREE;
     }
 
-    public toString() : string {
+    //TODO : TEST
+    public toTable() : Table<IToMD|IToString>  {
+        const TABLE : Table<IToMD|IToString> = new Table<IToMD|IToString>();
 
-        let output : string = "";
-
-        output += "Report\n";
+        TABLE.addColumns(
+            new Column("Path"),
+            new Column("Report")
+        )
 
         for (const CHILD_NAME of this) {
             const CHILD: T | this = this.get(CHILD_NAME);
+            TABLE.get("Path")?.push(CHILD_NAME)
             if (IsTree(CHILD)){
-                output += CHILD.toString()
+                TABLE.get("Report")?.push(CHILD.toTable());
             } else {
-                output += "A string reprsentation of a report";
+                TABLE.get("Report")?.push(JSON.stringify(CHILD));
             }
         }
 
-        return output;
+        return TABLE;
     }
 }
+
+/* TODO
+ *  Generic reporting of entries
+ *  Right amount of columns
+ *  planquer l'imbriquement des éléments
+*/
 
 
 /*

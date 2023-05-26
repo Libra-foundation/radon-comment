@@ -53,12 +53,16 @@ describe("Reporters tests", () => {
         expect(counter).toBe(5);
     });
 
-    /* Temporary disable
     test("CC Reporter -- Report is created", ()=>{
-        const REPORT = CCReporter(data);
-        expect(REPORT).toBeDefined();
-    })
-    */
+        const TREE = ReportTree.from<Array<CCEntry>>(data);
+        const TABLE = TREE.toTable();
+        
+        expect(TABLE).toBeDefined();
+
+        console.log(TABLE.toMD());
+
+
+    });
 
 
 })
