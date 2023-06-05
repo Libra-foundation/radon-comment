@@ -60,9 +60,6 @@ describe("Reporters tests", () => {
         expect(TABLE).toBeDefined();
 
         console.log(TABLE.toMD());
-
-
     });
-
 
 })
