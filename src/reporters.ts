@@ -1,71 +1,70 @@
-import { type CCReport, type CCEntry, RadonType, RadonRank, type Report,type IToString, type IToMD } from "./types";
-import { IsTree, Tree } from "./tree";
-import {Table, Column} from "./table"
-import * as path from "path"
+import {
+  type CCReport,
+  type CCEntry,
+  RadonType,
+  RadonRank,
+  type Report,
+  type IToString,
+  type IToMD
+} from "./types";
+import {IsTree, Tree} from "./tree";
+import {Table, Column} from "./table";
+import * as path from "path";
 
-const PATH_ENDS: Array<string> = [
-    ".",
-    "/"
-]
+const PATH_ENDS: Array<string> = [".", "/"];
 
 class ReportTree<T> extends Tree<T> {
+  public static from<T>(report: Readonly<Report<T>>): ReportTree<T> {
+    const TREE: ReportTree<T> = new ReportTree<T>();
 
-    public static from<T>(report :Readonly<Report<T>>) : ReportTree<T>{
-        const TREE:ReportTree<T> = new ReportTree<T>()
+    let current_tree: ReportTree<T>;
+    let temp_tree: ReportTree<T> = new ReportTree<T>();
+    let current_name: string = "";
 
-        let current_tree: ReportTree<T>;
-        let temp_tree: ReportTree<T> = new ReportTree<T>();
-        let current_name: string = "";
+    for (const F_NAME in report) {
+      current_tree = new ReportTree<T>();
 
-        for (const F_NAME in report) {
-            current_tree  = new ReportTree<T>();
-    
-            current_tree.set(path.basename(F_NAME), report[F_NAME]);
-            current_name = path.dirname(F_NAME);
-    
-            while (!PATH_ENDS.includes(current_name)) {
-                temp_tree = new ReportTree<T>();
-                temp_tree.set(path.basename(current_name), current_tree);
-                current_tree = temp_tree;
-                current_name = path.dirname(current_name)
-            }
+      current_tree.set(path.basename(F_NAME), report[F_NAME]);
+      current_name = path.dirname(F_NAME);
 
-            TREE.merge(current_tree);
+      while (!PATH_ENDS.includes(current_name)) {
+        temp_tree = new ReportTree<T>();
+        temp_tree.set(path.basename(current_name), current_tree);
+        current_tree = temp_tree;
+        current_name = path.dirname(current_name);
+      }
 
-        }
-
-        return TREE;
+      TREE.merge(current_tree);
     }
 
-    //TODO : TEST
-    public toTable() : Table<IToMD|IToString>  {
-        const TABLE : Table<IToMD|IToString> = new Table<IToMD|IToString>();
+    return TREE;
+  }
 
-        TABLE.addColumns(
-            new Column("Path"),
-            new Column("Report")
-        )
+  //TODO : TEST
+  public toTable(): Table<IToMD | IToString> {
+    const TABLE: Table<IToMD | IToString> = new Table<IToMD | IToString>();
 
-        for (const CHILD_NAME of this) {
-            const CHILD: T | this = this.get(CHILD_NAME);
-            TABLE.get("Path")?.push(CHILD_NAME)
-            if (IsTree(CHILD)){
-                TABLE.get("Report")?.push(CHILD.toTable());
-            } else {
-                TABLE.get("Report")?.push(JSON.stringify(CHILD));
-            }
-        }
+    TABLE.addColumns(new Column("Path"), new Column("Report"));
 
-        return TABLE;
+    for (const CHILD_NAME of this) {
+      const CHILD: T | this = this.get(CHILD_NAME);
+      TABLE.get("Path")?.push(CHILD_NAME);
+      if (IsTree(CHILD)) {
+        TABLE.get("Report")?.push(CHILD.toTable());
+      } else {
+        TABLE.get("Report")?.push(JSON.stringify(CHILD));
+      }
     }
+
+    return TABLE;
+  }
 }
 
 /* TODO
  *  Generic reporting of entries
  *  Right amount of columns
  *  planquer l'imbriquement des éléments
-*/
-
+ */
 
 /*
 
@@ -73,7 +72,7 @@ class ReportTree<T> extends Tree<T> {
  * The leafs of the trees are the sets of entries which correspond to the files in the corresponding folder.
  * 
  * @param data The report to convert.
- *//*
+ */ /*
 
 function GetComplexityRank(complexity :number): RadonRank{
     // Radon has a better way of doing this. I don't know how to cleanly copy their way of working.
@@ -182,10 +181,9 @@ export function CCReporter(data: Readonly<CCReport>): string{
 
 /* eslint-disable @typescript-eslint/naming-convention -- The test interface only map existing tokens. Name checking isn't needed there. */
 export interface TypeOfTest {
-    ReportTree : typeof ReportTree;
+  ReportTree: typeof ReportTree;
 }
 /* eslint-enable @typescript-eslint/naming-convention */
 
-export const TEST:TypeOfTest|null  = process.env.NODE_ENV?.toUpperCase() === 'TEST'
-    ? {ReportTree}
-    : null
+export const TEST: TypeOfTest | null =
+  process.env.NODE_ENV?.toUpperCase() === "TEST" ? {ReportTree} : null;
