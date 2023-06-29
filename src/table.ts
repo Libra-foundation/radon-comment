@@ -14,7 +14,6 @@ export class Column<T extends IToMD|IToString> {
         this.data.push(...values);
     }
 
-    //TODO : TEST
     public [Symbol.iterator]():Iterator<T> {
         return this.data[Symbol.iterator]()
     }
@@ -40,28 +39,25 @@ export class Table<T extends IToMD|IToString> implements IToMD {
         }
     }
 
-    //TODO : TEST
     public get (name:string): Column<T> | undefined {
         return this.DATA.get(name)
     }
 
-    //TODO : TEST
     public *[Symbol.iterator]():Iterator<Array<T>> {
         const COLUMNS : Array<Column<T>> = Array.from(this.DATA).map(v => v[1]);
-        const LENGTH:number = Math.min(...COLUMNS.map(c => c.length));
+        const LENGTH:number = COLUMNS.length>0 ? Math.min(...COLUMNS.map(c => c.length)):0;
         
         for (let index:number =0; index<LENGTH ;index++){
             yield COLUMNS.map(c => c.get(index));
         }
     }
 
-    //TODO : TEST
     public toMD ():string {
         let output: string = "";
         
         output += "<table><tr>";
 
-        for (const HEADER in this.DATA){
+        for (const HEADER of this.DATA.keys()){
             output += `<th>${HEADER}</th>`;
         }
 
