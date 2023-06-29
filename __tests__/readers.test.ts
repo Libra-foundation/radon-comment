@@ -3,36 +3,27 @@ import {CCReader, HalReader, MIReader} from "../src/readers";
 
 // TODO : Test with corrupted/incompleat/wrong data
 describe("Readers tests", () => {
+  test("CC Reader -- does read", async () => {
+    const DATA = await CCReader("__tests__/data/cc.json");
 
-    test("CC Reader -- does read", async ()=> {
+    expect(DATA).toBeDefined();
 
-        const DATA = await CCReader("__tests__/data/cc.json");
+    expect(Object.keys(DATA)).toHaveLength(5);
+  });
 
-        expect(DATA).toBeDefined();
+  test("Hal Reader -- does read", async () => {
+    const DATA = await HalReader("__tests__/data/hal.json");
 
-        expect(Object.keys(DATA)).toHaveLength(5)
+    expect(DATA).toBeDefined();
 
-    });
+    expect(Object.keys(DATA)).toHaveLength(10);
+  });
 
-    test("Hal Reader -- does read", async ()=> {
+  test("MI Reader -- does read", async () => {
+    const DATA = await MIReader("__tests__/data/mi.json");
 
-        const DATA = await HalReader("__tests__/data/hal.json");
+    expect(DATA).toBeDefined();
 
-        expect(DATA).toBeDefined();
-
-        expect(Object.keys(DATA)).toHaveLength(10)
-
-    });
-
-    test("MI Reader -- does read", async ()=> {
-
-        const DATA = await MIReader("__tests__/data/mi.json");
-
-        expect(DATA).toBeDefined();
-
-        expect(Object.keys(DATA)).toHaveLength(10)
-
-    });
-
-
-})
+    expect(Object.keys(DATA)).toHaveLength(10);
+  });
+});
