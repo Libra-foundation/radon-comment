@@ -13,34 +13,49 @@ import * as path from "path";
 
 const PATH_ENDS: Array<string> = [".", "/"];
 
-class CCSerializer implements IToMD {
-  protected data: Array<CCEntry>;
+abstract class Serializer<T> implements IToMD {
+  protected data: T;
 
-  public constructor(data: Array<CCEntry>) {
+  public constructor(data: T) {
     this.data = data;
   }
+  public abstract toMD(): string;
+}
 
+class CCSerializer extends Serializer<Array<CCEntry>> {
   public toMD(): string {
-    return JSON.stringify(this.data);
+    return String(Math.max(...this.data.map(entry => entry.complexity)));
   }
 }
 
-class ReportTree<T> extends Tree<T> {
-  public static from<T>(report: Readonly<Report<T>>): ReportTree<T> {
-    const TREE: ReportTree<T> = new ReportTree<T>();
+abstract class ReportTree<
+  T,
+  S extends Serializer<T>,
+  R extends ReportTree<T, S, R>
+> extends Tree<S> {
+  protected static fromReport<
+    T,
+    S extends Serializer<T>,
+    R extends ReportTree<T, S, R>
+  >(
+    report: Readonly<Report<T>>,
+    serializer: (e: T) => S,
+    self_factory: () => R
+  ): R {
+    const TREE: R = self_factory();
 
-    let current_tree: ReportTree<T>;
-    let temp_tree: ReportTree<T> = new ReportTree<T>();
+    let current_tree: R;
+    let temp_tree: R = self_factory();
     let current_name: string = "";
 
     for (const F_NAME in report) {
-      current_tree = new ReportTree<T>();
+      current_tree = self_factory();
 
-      current_tree.set(path.basename(F_NAME), report[F_NAME]);
+      current_tree.set(path.basename(F_NAME), serializer(report[F_NAME]));
       current_name = path.dirname(F_NAME);
 
       while (!PATH_ENDS.includes(current_name)) {
-        temp_tree = new ReportTree<T>();
+        temp_tree = self_factory();
         temp_tree.set(path.basename(current_name), current_tree);
         current_tree = temp_tree;
         current_name = path.dirname(current_name);
@@ -54,9 +69,10 @@ class ReportTree<T> extends Tree<T> {
     return TREE;
   }
 
+  //TODO: test
   protected simplify(): void {
     for (const CHILD_NAME of this) {
-      const CHILD: T | this | undefined = this.get(CHILD_NAME);
+      const CHILD: S | this | undefined = this.get(CHILD_NAME);
       if (IsTree(CHILD)) {
         CHILD.simplify();
       }
@@ -78,7 +94,7 @@ class ReportTree<T> extends Tree<T> {
     const CHILD_NAME: string = CHILD.CHILDS.keys().next().value as string;
 
     this.CHILDS.delete(NAME);
-    this.CHILDS.set(NAME + "/" + CHILD_NAME, CHILD.get(CHILD_NAME) as T | this);
+    this.CHILDS.set(NAME + "/" + CHILD_NAME, CHILD.get(CHILD_NAME) as S | this);
   }
 
   //TODO : TEST
@@ -88,12 +104,12 @@ class ReportTree<T> extends Tree<T> {
     TABLE.addColumns(new Column("Path"), new Column("Report"));
 
     for (const CHILD_NAME of this) {
-      const CHILD: T | this | undefined = this.get(CHILD_NAME);
+      const CHILD: S | this | undefined = this.get(CHILD_NAME);
       TABLE.get("Path")?.push(CHILD_NAME);
       if (IsTree(CHILD)) {
         TABLE.get("Report")?.push(CHILD.toTable());
       } else {
-        TABLE.get("Report")?.push(JSON.stringify(CHILD));
+        TABLE.get("Report")?.push(CHILD as S);
       }
     }
 
@@ -101,50 +117,17 @@ class ReportTree<T> extends Tree<T> {
   }
 }
 
-class CCReportTree extends Tree<CCSerializer> {
-  public static from(report: Readonly<CCReport>): CCReportTree {
-    const TREE: CCReportTree = new CCReportTree();
-
-    let current_tree: CCReportTree;
-    let temp_tree: CCReportTree = new CCReportTree();
-    let current_name: string = "";
-
-    for (const F_NAME in report) {
-      current_tree = new CCReportTree();
-
-      current_tree.set(path.basename(F_NAME), new CCSerializer(report[F_NAME]));
-      current_name = path.dirname(F_NAME);
-
-      while (!PATH_ENDS.includes(current_name)) {
-        temp_tree = new CCReportTree();
-        temp_tree.set(path.basename(current_name), current_tree);
-        current_tree = temp_tree;
-        current_name = path.dirname(current_name);
-      }
-
-      TREE.merge(current_tree);
-    }
-
-    return TREE;
-  }
-
-  //TODO : TEST
-  public toTable(): Table<IToMD | IToString> {
-    const TABLE: Table<IToMD | IToString> = new Table<IToMD | IToString>();
-
-    TABLE.addColumns(new Column("Path"), new Column("Report"));
-
-    for (const CHILD_NAME of this) {
-      const CHILD: CCSerializer | this | undefined = this.get(CHILD_NAME);
-      TABLE.get("Path")?.push(CHILD_NAME);
-      if (IsTree(CHILD)) {
-        TABLE.get("Report")?.push(CHILD.toTable());
-      } else {
-        TABLE.get("Report")?.push(JSON.stringify(CHILD));
-      }
-    }
-
-    return TABLE;
+export class CCReportTree extends ReportTree<
+  Array<CCEntry>,
+  CCSerializer,
+  CCReportTree
+> {
+  public static from(report: CCReport): CCReportTree {
+    return ReportTree.fromReport<Array<CCEntry>, CCSerializer, CCReportTree>(
+      report,
+      e => new CCSerializer(e),
+      () => new CCReportTree()
+    );
   }
 }
 

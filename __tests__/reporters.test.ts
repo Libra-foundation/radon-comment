@@ -1,10 +1,8 @@
 import {describe, test, expect, beforeAll} from "@jest/globals";
 import {CCReader} from "../src/readers";
-import type {CCEntry, CCReport} from "../src/types";
-import {TEST, type TypeOfTest} from "../src/reporters";
+import type {CCReport} from "../src/types";
+import {CCReportTree} from "../src/reporters";
 import {IsTree} from "../src/tree";
-
-const {ReportTree} = TEST as TypeOfTest;
 
 describe("Reporters tests", () => {
   let data: CCReport;
@@ -14,7 +12,7 @@ describe("Reporters tests", () => {
   });
 
   test("CC Reporter -- Tree building", () => {
-    const TREE = ReportTree.from<Array<CCEntry>>(data);
+    const TREE = CCReportTree.from(data);
     expect(TREE).toBeDefined();
 
     expect(TREE.get).toBeDefined();
@@ -47,11 +45,11 @@ describe("Reporters tests", () => {
   });
 
   test("CC Reporter -- Report is created", () => {
-    const TREE = ReportTree.from<Array<CCEntry>>(data);
+    const TREE = CCReportTree.from(data);
     const TABLE = TREE.toTable();
 
     expect(TABLE).toBeDefined();
 
-    //console.log(TABLE.toMD());
+    console.log(TABLE.toMD());
   });
 });
