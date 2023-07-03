@@ -13,6 +13,18 @@ import * as path from "path";
 
 const PATH_ENDS: Array<string> = [".", "/"];
 
+class CCSerializer implements IToMD {
+  protected data: Array<CCEntry>;
+
+  public constructor(data: Array<CCEntry>) {
+    this.data = data;
+  }
+
+  public toMD(): string {
+    return JSON.stringify(this.data);
+  }
+}
+
 class ReportTree<T> extends Tree<T> {
   public static from<T>(report: Readonly<Report<T>>): ReportTree<T> {
     const TREE: ReportTree<T> = new ReportTree<T>();
@@ -37,6 +49,82 @@ class ReportTree<T> extends Tree<T> {
       TREE.merge(current_tree);
     }
 
+    TREE.simplify();
+
+    return TREE;
+  }
+
+  protected simplify(): void {
+    for (const CHILD_NAME of this) {
+      const CHILD: T | this | undefined = this.get(CHILD_NAME);
+      if (IsTree(CHILD)) {
+        CHILD.simplify();
+      }
+    }
+
+    if (this.CHILDS.size > 1) {
+      return;
+    }
+    const NAME: string = this.CHILDS.keys().next().value as string;
+
+    if (!IsTree(this.get(NAME))) {
+      return;
+    }
+
+    if ((this.get(NAME) as this).CHILDS.size > 1) {
+      return;
+    }
+    const CHILD: this = this.get(NAME) as this;
+    const CHILD_NAME: string = CHILD.CHILDS.keys().next().value as string;
+
+    this.CHILDS.delete(NAME);
+    this.CHILDS.set(NAME + "/" + CHILD_NAME, CHILD.get(CHILD_NAME) as T | this);
+  }
+
+  //TODO : TEST
+  public toTable(): Table<IToMD | IToString> {
+    const TABLE: Table<IToMD | IToString> = new Table<IToMD | IToString>();
+
+    TABLE.addColumns(new Column("Path"), new Column("Report"));
+
+    for (const CHILD_NAME of this) {
+      const CHILD: T | this | undefined = this.get(CHILD_NAME);
+      TABLE.get("Path")?.push(CHILD_NAME);
+      if (IsTree(CHILD)) {
+        TABLE.get("Report")?.push(CHILD.toTable());
+      } else {
+        TABLE.get("Report")?.push(JSON.stringify(CHILD));
+      }
+    }
+
+    return TABLE;
+  }
+}
+
+class CCReportTree extends Tree<CCSerializer> {
+  public static from(report: Readonly<CCReport>): CCReportTree {
+    const TREE: CCReportTree = new CCReportTree();
+
+    let current_tree: CCReportTree;
+    let temp_tree: CCReportTree = new CCReportTree();
+    let current_name: string = "";
+
+    for (const F_NAME in report) {
+      current_tree = new CCReportTree();
+
+      current_tree.set(path.basename(F_NAME), new CCSerializer(report[F_NAME]));
+      current_name = path.dirname(F_NAME);
+
+      while (!PATH_ENDS.includes(current_name)) {
+        temp_tree = new CCReportTree();
+        temp_tree.set(path.basename(current_name), current_tree);
+        current_tree = temp_tree;
+        current_name = path.dirname(current_name);
+      }
+
+      TREE.merge(current_tree);
+    }
+
     return TREE;
   }
 
@@ -47,7 +135,7 @@ class ReportTree<T> extends Tree<T> {
     TABLE.addColumns(new Column("Path"), new Column("Report"));
 
     for (const CHILD_NAME of this) {
-      const CHILD: T | this = this.get(CHILD_NAME);
+      const CHILD: CCSerializer | this | undefined = this.get(CHILD_NAME);
       TABLE.get("Path")?.push(CHILD_NAME);
       if (IsTree(CHILD)) {
         TABLE.get("Report")?.push(CHILD.toTable());

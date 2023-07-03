@@ -11,13 +11,16 @@ export function IsTree<T extends Tree<any>>(obj: unknown): obj is T {
 }
 
 export class Tree<T> implements Iterable<string> {
-  protected readonly CHILDS: Record<string, T | this> = {};
+  protected readonly CHILDS: Map<string, T | this> = new Map<
+    string,
+    T | this
+  >();
 
   public merge(other: Readonly<this>): void {
     let tree: unknown;
     for (const KEY of other) {
-      if (KEY in this.CHILDS) {
-        tree = this.CHILDS[KEY];
+      if (this.has(KEY)) {
+        tree = this.CHILDS.get(KEY);
         if (IsTree<this>(tree)) {
           tree.merge(other.get(KEY) as this);
         } else {
@@ -29,20 +32,24 @@ export class Tree<T> implements Iterable<string> {
     }
   }
 
-  public get(key: string): T | this {
-    return this.CHILDS[key];
+  public get(key: string): T | this | undefined {
+    return this.CHILDS.get(key);
   }
 
   // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- Readonly would create a type incoherance.
   public set(key: string, value: T | this): void {
-    this.CHILDS[key] = value;
+    this.CHILDS.set(key, value);
   }
 
   public has(key: string): boolean {
-    return key in this.CHILDS;
+    return this.CHILDS.has(key);
+  }
+
+  public isLeaf(): boolean {
+    return this.CHILDS.size === 0;
   }
 
   public [Symbol.iterator](): Iterator<string> {
-    return Object.keys(this.CHILDS)[Symbol.iterator]();
+    return this.CHILDS.keys()[Symbol.iterator]();
   }
 }

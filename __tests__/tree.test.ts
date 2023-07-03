@@ -16,7 +16,7 @@ describe("Tree tests", () => {
     const TREE: Tree<string> = new Tree<string>();
 
     expect(TREE.has("test")).toBe(false);
-    TREE.set("test", "test");
+    TREE.set("test", "test value");
     expect(TREE.has("test")).toBe(true);
   });
 
@@ -76,9 +76,8 @@ describe("Tree tests", () => {
     expect(TREE.has("test_2")).toBe(true);
 
     expect(IsTree(TREE.get("test_2"))).toBe(true);
-    expect(IsTree(TREE.get("test_2"))).toBe(true);
-    expect((TREE.get("test_2") as Tree<string>).has("test_3")).toBe(true);
     expect((TREE.get("test_2") as Tree<string>).has("test_5")).toBe(true);
+    expect((TREE.get("test_2") as Tree<string>).has("test_3")).toBe(true);
 
     expect((TREE.get("test_2") as Tree<string>).get("test_3")).toEqual(
       "test_4"
