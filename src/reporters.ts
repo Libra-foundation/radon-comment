@@ -5,7 +5,11 @@ import {
   RadonRank,
   type Report,
   type IToString,
-  type IToMD
+  type IToMD,
+  type HalEntry,
+  MIEntry,
+  MIReport,
+  HalReport
 } from "./types";
 import {IsTree, Tree} from "./tree";
 import {Table, Column} from "./table";
@@ -78,6 +82,18 @@ class CCSerializer extends Serializer<Array<CCEntry>> {
     return ` (${min_complex}/${mean_complex.toFixed(
       1
     )}/${max_complex}) <strong>${GetComplexityRank(mean_complex)}</strong>`;
+  }
+}
+
+class HalSerializer extends Serializer<HalEntry> {
+  public toMD(): string {
+    throw new Error("Method not implemented.");
+  }
+}
+
+class MISerializer extends Serializer<MIEntry> {
+  public toMD(): string {
+    return ` ${this.data.mi.toFixed(1)} <strong>${this.data.rank}</strong>`;
   }
 }
 
@@ -184,6 +200,34 @@ export class CCReportTree extends ReportTree<
   }
 }
 
+export class MIReportTree extends ReportTree<
+  MIEntry,
+  MISerializer,
+  MIReportTree
+> {
+  public static from(report: MIReport): MIReportTree {
+    return ReportTree.fromReport<MIEntry, MISerializer, MIReportTree>(
+      report,
+      e => new MISerializer(e),
+      () => new MIReportTree()
+    );
+  }
+}
+
+export class HalReportTree extends ReportTree<
+  HalEntry,
+  HalSerializer,
+  HalReportTree
+> {
+  public static from(report: HalReport): HalReportTree {
+    return ReportTree.fromReport<HalEntry, HalSerializer, HalReportTree>(
+      report,
+      e => new HalSerializer(e),
+      () => new HalReportTree()
+    );
+  }
+}
+
 /* TODO
  *  Generic reporting of entries
  *  Right amount of columns
@@ -191,82 +235,6 @@ export class CCReportTree extends ReportTree<
  */
 
 /*
-
-
-
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- Almost impossible to make readonly and still being useful.
-function ReportTree2(data: Readonly<Tree<Array<CCEntry>>>): string {
-    let output: string = "";
-    let key: string = "";
-    let table: string = "";
-    let min_complex: number, mean_complex: number, max_complex: number;
-    let counter: number;
-    while (Object.keys(data).length === 1){
-        key = Object.keys(data)[0];
-        if (Array.isArray(data[key])) {
-            break;
-        } else {
-            output += `/${key}`;
-            data = data[key] as Tree<Array<CCEntry>>;
-        }
-    }
-
-    output = 
-        `<details><summary>${output}</summary>\n` +
-        "<table>";
-
-    for (key of Object.keys(data)){
-        if (Array.isArray(data[key])){
-            table = "";
-            
-            min_complex = Number.MAX_SAFE_INTEGER;
-            mean_complex = 0;
-            max_complex = Number.MIN_SAFE_INTEGER;
-            counter = 0;
-
-            for (const ENTRY of data[key] as Array<CCEntry>){
-                if (ENTRY.type === RadonType.M){ // Methods are registered both in the class and in the file.
-                    continue;
-                }
-
-                if (min_complex > ENTRY.complexity){
-                    min_complex = ENTRY.complexity;
-                }
-
-                if (max_complex < ENTRY.complexity) {
-                    max_complex = ENTRY.complexity;
-                }
-
-                mean_complex += ENTRY.complexity;
-                counter ++;
-
-                table += `<tr><td>${ENTRY.name}</td><td>${ENTRY.complexity }</td><td>${ENTRY.rank}</td></tr>\n`;
-            }
-
-            output +=
-                `<tr><td><details><summary>${key}</summary>\n` + 
-                "<table><tr><th>name</th><th>complexity</th><th>rank</th></tr>\n" + 
-                table + 
-                "</table></details></td>";
-
-            if (min_complex === max_complex) {
-                output +=
-                    `<td>${max_complex}</td>` +
-                    `<td><strong>${GetComplexityRank(max_complex)}</strong></td>`;
-            } else {
-                output +=
-                    `<td>${max_complex}/${(mean_complex/counter).toFixed(2)}/${min_complex}</td>` +
-                    `<td><strong>${GetComplexityRank(mean_complex/counter)}</strong></td>\n`;
-            }
-
-            output += "</td></tr>";
-        }
-    }
-
-    output += "</table></details>";
-
-    return output;
-}
 
 /* eslint-disable @typescript-eslint/naming-convention -- The test interface only map existing tokens. Name checking isn't needed there. */
 export interface TypeOfTest {
