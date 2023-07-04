@@ -22,9 +22,62 @@ abstract class Serializer<T> implements IToMD {
   public abstract toMD(): string;
 }
 
+/**Convert a report into a Tree of its entries. The tree represent the folder architecture of the project.
+ * The leafs of the trees are the sets of entries which correspond to the files in the corresponding folder.
+ *
+ * @param data The report to convert.
+ */
+
+function GetComplexityRank(complexity: number): RadonRank {
+  // Radon has a better way of doing this. I don't know how to cleanly copy their way of working.
+  // see https://radon.readthedocs.io/en/latest/api.html#module-radon.complexity for more information.
+  if (complexity < 6) {
+    return RadonRank.A;
+  } else if (complexity < 11) {
+    return RadonRank.B;
+  } else if (complexity < 21) {
+    return RadonRank.C;
+  } else if (complexity < 31) {
+    return RadonRank.D;
+  } else if (complexity < 41) {
+    return RadonRank.E;
+  }
+  return RadonRank.F;
+}
+
 class CCSerializer extends Serializer<Array<CCEntry>> {
   public toMD(): string {
-    return String(Math.max(...this.data.map(entry => entry.complexity)));
+    let min_complex: number = Number.MAX_SAFE_INTEGER;
+    let mean_complex: number = 0;
+    let max_complex: number = Number.MIN_SAFE_INTEGER;
+    let counter: number = 0;
+
+    for (const ENTRY of this.data) {
+      if (ENTRY.type === RadonType.M) {
+        // Methods are registered both in the class and in the file.
+        continue;
+      }
+
+      if (min_complex > ENTRY.complexity) {
+        min_complex = ENTRY.complexity;
+      }
+
+      if (max_complex < ENTRY.complexity) {
+        max_complex = ENTRY.complexity;
+      }
+
+      mean_complex += ENTRY.complexity;
+      counter++;
+    }
+    mean_complex = mean_complex / counter;
+    if (min_complex === max_complex) {
+      return ` (${max_complex}) <strong>${GetComplexityRank(
+        max_complex
+      )}</strong>`;
+    }
+    return ` (${min_complex}/${mean_complex.toFixed(
+      1
+    )}/${max_complex}) <strong>${GetComplexityRank(mean_complex)}</strong>`;
   }
 }
 
@@ -139,28 +192,7 @@ export class CCReportTree extends ReportTree<
 
 /*
 
-/**Convert a report into a Tree of its entries. The tree represent the folder architecture of the project.
- * The leafs of the trees are the sets of entries which correspond to the files in the corresponding folder.
- * 
- * @param data The report to convert.
- */ /*
 
-function GetComplexityRank(complexity :number): RadonRank{
-    // Radon has a better way of doing this. I don't know how to cleanly copy their way of working.
-    // see https://radon.readthedocs.io/en/latest/api.html#module-radon.complexity for more information.
-    if (complexity < 6){
-        return RadonRank.A;
-    } else if (complexity < 11) {
-        return RadonRank.B;
-    } else if (complexity < 21) {
-        return RadonRank.C;
-    } else if (complexity < 31) {
-        return RadonRank.D;
-    } else if (complexity < 41) {
-        return RadonRank.E;
-    }
-    return RadonRank.F;
-}
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- Almost impossible to make readonly and still being useful.
 function ReportTree2(data: Readonly<Tree<Array<CCEntry>>>): string {
@@ -235,20 +267,6 @@ function ReportTree2(data: Readonly<Tree<Array<CCEntry>>>): string {
 
     return output;
 }
-
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- Almost impossible to make readonly and still being useful.
-export function CCReporter(data: Readonly<CCReport>): string{
-    const TREES: Array<Tree<Array<CCEntry>>> = ToTrees(data);
-
-    let output:string = "";
-
-    for (const TREE of TREES){
-        output += ReportTree(TREE);
-    }
-
-    return output
-}
-*/
 
 /* eslint-disable @typescript-eslint/naming-convention -- The test interface only map existing tokens. Name checking isn't needed there. */
 export interface TypeOfTest {
