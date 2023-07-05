@@ -44,9 +44,12 @@
     "verbose": true
   },
   "dependencies": {
-    "@actions/core": "^1.10.0"
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1"
   },
   "devDependencies": {
+    "@octokit/core": "^4.2.4",
+    "@octokit/types": "^10.0.0",
     "@types/jest": "^29.2.6",
     "@types/node": "^18.11.0",
     "@typescript-eslint/eslint-plugin": "^5.43.0",

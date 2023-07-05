@@ -7,9 +7,9 @@ import {
   type IToString,
   type IToMD,
   type HalEntry,
-  MIEntry,
-  MIReport,
-  HalReport
+  type MIEntry,
+  type MIReport,
+  type HalReport
 } from "./types";
 import {IsTree, Tree} from "./tree";
 import {Table, Column} from "./table";
@@ -87,7 +87,21 @@ class CCSerializer extends Serializer<Array<CCEntry>> {
 
 class HalSerializer extends Serializer<HalEntry> {
   public toMD(): string {
-    throw new Error("Method not implemented.");
+    return (
+      "" +
+      //  `${this.data.total[0]}` +               // number of distinct operators
+      //  `${this.data.total[1]}` +               // number of distinct operands
+      //  `${this.data.total[2]}` +               // total number of operators
+      //  `${this.data.total[3]}` +               // total number of operands
+      //  `${this.data.total[4]}` +               // program vocabulary
+      //  `${this.data.total[5]}` +               // program length
+      //  `${this.data.total[6]}` +               // calculated program length
+      `V(${this.data.total[7].toFixed(1)});` + // volume
+      `D(${this.data.total[8].toFixed(1)});` + // difficulty
+      //  `${this.data.total[9]}` +               // effort
+      `T(${this.data.total[10].toFixed(1)});` + // time required to program (second)
+      `B(${this.data.total[11].toFixed(1)});`
+    ); // number of bugs delivered
   }
 }
 
@@ -233,8 +247,6 @@ export class HalReportTree extends ReportTree<
  *  Right amount of columns
  *  planquer l'imbriquement des éléments
  */
-
-/*
 
 /* eslint-disable @typescript-eslint/naming-convention -- The test interface only map existing tokens. Name checking isn't needed there. */
 export interface TypeOfTest {
