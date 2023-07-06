@@ -150,15 +150,15 @@ const github_1 = __nccwpck_require__(5438);
 const IS_TESTING = process.env.NODE_ENV === "test";
 const CC_PATH = IS_TESTING
     ? core.getInput("cc")
-    : "__test__/data/cc.json";
+    : "__tests__/data/cc.json";
 const HAS_CC = CC_PATH !== "";
 const HAL_PATH = IS_TESTING
     ? core.getInput("hal")
-    : "__test__/data/hal.json";
+    : "__tests__/data/hal.json";
 const HAS_HAL = HAL_PATH !== "";
 const MI_PATH = IS_TESTING
     ? core.getInput("mi")
-    : "__test__/data/mi.json";
+    : "__tests__/data/mi.json";
 const HAS_MI = MI_PATH !== "";
 const PR_NUMBER = (_c = (_a = parseInt(core.getInput("pr_number"))) !== null && _a !== void 0 ? _a : (_b = github_1.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.number) !== null && _c !== void 0 ? _c : -1;
 const GITHUB_TOKEN = core.getInput("GITHUB_TOKEN");
