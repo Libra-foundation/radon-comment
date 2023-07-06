@@ -57,6 +57,7 @@ const github = __importStar(__nccwpck_require__(5438));
 const { HAS_CC, CC_PATH, HAS_HAL, HAL_PATH, HAS_MI, MI_PATH, PR_NUMBER, GITHUB_TOKEN, COMMENT_TAG } = params_1.default;
 function Run() {
     var _a, e_1, _b, _c;
+    var _d;
     return __awaiter(this, void 0, void 0, function* () {
         let message = "";
         if (PR_NUMBER === -1) {
@@ -81,11 +82,17 @@ function Run() {
                 message += "\n";
             }
             message += `\n ${COMMENT_TAG}`;
+        }
+        catch (error) {
+            if (error instanceof Error)
+                core.setFailed("Error while reading reports:" + error.message);
+        }
+        try {
             let comment;
             try {
-                for (var _d = true, _e = __asyncValues(OCTOKIT.paginate.iterator(OCTOKIT.rest.issues.listComments, Object.assign(Object.assign({}, github.context.repo), { issue_number: PR_NUMBER }))), _f; _f = yield _e.next(), _a = _f.done, !_a; _d = true) {
-                    _c = _f.value;
-                    _d = false;
+                for (var _e = true, _f = __asyncValues(OCTOKIT.paginate.iterator(OCTOKIT.rest.issues.listComments, Object.assign(Object.assign({}, github.context.repo), { issue_number: PR_NUMBER }))), _g; _g = yield _f.next(), _a = _g.done, !_a; _e = true) {
+                    _c = _g.value;
+                    _e = false;
                     const { data: COMMENTS } = _c;
                     comment = COMMENTS.find(comment => { var _a; return (_a = comment.body) === null || _a === void 0 ? void 0 : _a.includes(COMMENT_TAG); });
                     if (comment !== undefined)
@@ -95,18 +102,20 @@ function Run() {
             catch (e_1_1) { e_1 = { error: e_1_1 }; }
             finally {
                 try {
-                    if (!_d && !_a && (_b = _e.return)) yield _b.call(_e);
+                    if (!_e && !_a && (_b = _f.return)) yield _b.call(_f);
                 }
                 finally { if (e_1) throw e_1.error; }
             }
             if (comment === undefined) {
                 void (yield OCTOKIT.rest.issues.createComment(Object.assign(Object.assign({}, github.context.repo), { issue_number: PR_NUMBER, body: message })));
             }
-            core.setOutput("time", new Date().toTimeString());
+            else {
+                void (yield OCTOKIT.rest.issues.updateComment(Object.assign(Object.assign({}, github.context.repo), { comment_id: comment.id, body: message })));
+            }
         }
         catch (error) {
             if (error instanceof Error)
-                core.setFailed(error.message);
+                core.setFailed(`${error.message} :\n ${(_d = error.stack) !== null && _d !== void 0 ? _d : "No stacktrace available."}`);
         }
     });
 }
