@@ -170,9 +170,9 @@ const MI_PATH = IS_TESTING
     ? core.getInput("mi")
     : "__tests__/data/mi.json";
 const HAS_MI = MI_PATH !== "";
-const PR_NUMBER = isNaN(parseInt(core.getInput("pr_number"))) ?
-    (_b = (_a = github_1.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) !== null && _b !== void 0 ? _b : -1 :
-    parseInt(core.getInput("pr_number"));
+const PR_NUMBER = isNaN(parseInt(core.getInput("pr_number")))
+    ? (_b = (_a = github_1.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) !== null && _b !== void 0 ? _b : -1
+    : parseInt(core.getInput("pr_number"));
 const GITHUB_TOKEN = core.getInput("GITHUB_TOKEN");
 const COMMENT_TAG = "<!-- Libra-foundation/radon-comment -->";
 exports["default"] = {
