@@ -21,11 +21,9 @@ const MI_PATH: string = IS_TESTING
 
 const HAS_MI: boolean = MI_PATH !== "";
 
-const PR_NUMBER: number =
-  (parseInt(core.getInput("pr_number")) as number | undefined) ??
-  context.payload.pull_request?.number ??
-  -1;
-
+const PR_NUMBER: number = isNaN(parseInt(core.getInput("pr_number")))
+  ? context.payload.pull_request?.number ?? -1
+  : parseInt(core.getInput("pr_number"));
 const GITHUB_TOKEN: string = core.getInput("GITHUB_TOKEN");
 
 const COMMENT_TAG: string = "<!-- Libra-foundation/radon-comment -->";
