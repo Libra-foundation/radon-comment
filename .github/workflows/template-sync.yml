@@ -21,3 +21,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           source_repo_path: Libra-foundation/typescript-action
           pr_title: "[DOWNSTREAM] merge changes from template repository"
+          upstream_branch: "development"

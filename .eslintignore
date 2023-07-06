@@ -1,5 +1,6 @@
 dist/
 lib/
 node_modules/
-*.js
+jest.config.js
 *.guard.ts
+*.js
