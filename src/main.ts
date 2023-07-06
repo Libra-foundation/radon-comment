@@ -25,6 +25,8 @@ async function Run(): Promise<void> {
     core.setFailed("No pull request in input neither in current context.");
   }
 
+  core.debug(`PR_NUMBER:${PR_NUMBER}`);
+
   // eslint-disable-next-line @typescript-eslint/typedef -- This one is a hell.
   const OCTOKIT = github.getOctokit(GITHUB_TOKEN);
 
