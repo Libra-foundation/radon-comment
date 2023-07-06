@@ -48,7 +48,12 @@ async function Run(): Promise<void> {
     }
 
     message += `\n ${COMMENT_TAG}`;
+  } catch (error) {
+    if (error instanceof Error)
+      core.setFailed("Error while reading reports:" + error.message);
+  }
 
+  try {
     type ListCommentsResponseDataType = GetResponseDataTypeFromEndpointMethod<
       typeof OCTOKIT.rest.issues.listComments
     >;
@@ -71,9 +76,13 @@ async function Run(): Promise<void> {
         issue_number: PR_NUMBER,
         body: message
       }));
+    } else {
+      void (await OCTOKIT.rest.issues.updateComment({
+        ...github.context.repo,
+        comment_id: comment.id,
+        body: message
+      }));
     }
-
-    core.setOutput("time", new Date().toTimeString());
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message);
   }

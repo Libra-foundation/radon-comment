@@ -81,6 +81,12 @@ function Run() {
                 message += "\n";
             }
             message += `\n ${COMMENT_TAG}`;
+        }
+        catch (error) {
+            if (error instanceof Error)
+                core.setFailed("Error while reading reports:" + error.message);
+        }
+        try {
             let comment;
             try {
                 for (var _d = true, _e = __asyncValues(OCTOKIT.paginate.iterator(OCTOKIT.rest.issues.listComments, Object.assign(Object.assign({}, github.context.repo), { issue_number: PR_NUMBER }))), _f; _f = yield _e.next(), _a = _f.done, !_a; _d = true) {
@@ -102,7 +108,9 @@ function Run() {
             if (comment === undefined) {
                 void (yield OCTOKIT.rest.issues.createComment(Object.assign(Object.assign({}, github.context.repo), { issue_number: PR_NUMBER, body: message })));
             }
-            core.setOutput("time", new Date().toTimeString());
+            else {
+                void (yield OCTOKIT.rest.issues.updateComment(Object.assign(Object.assign({}, github.context.repo), { comment_id: comment.id, body: message })));
+            }
         }
         catch (error) {
             if (error instanceof Error)
