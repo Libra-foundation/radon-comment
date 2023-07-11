@@ -1,36 +1,64 @@
 export enum RadonType {
-    C = "class",
-    M = "method",
-    F = "function"
+  C = "class",
+  M = "method",
+  F = "function"
 }
 
 export enum RadonRank {
-    A = "A",
-    B = "B",
-    C = "C",
-    D = "D",
-    E = "E",
-    F = "F"
+  A = "A",
+  B = "B",
+  C = "C",
+  D = "D",
+  E = "E",
+  F = "F"
 }
 
 /** @see {IsCCEntry} ts-auto-guard:type-guard */
 export interface CCEntry {
-    type: RadonType ,
-    rank: RadonRank,
-    name: string,
-    // eslint-disable-next-line @typescript-eslint/naming-convention -- Radon chose the name, not me.
-    col_offset: number,
-    complexity: number,
-    endline: number,
-    lineno: number,
-    methods?: Array<CCEntry>,
-    classname?: string,
-    closures?: Array<unknown>
+  type: RadonType;
+  rank: RadonRank;
+  name: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention -- Radon chosed the name, not me.
+  col_offset: number;
+  complexity: number;
+  endline: number;
+  lineno: number;
+  methods?: Array<CCEntry>;
+  classname?: string;
+  closures?: Array<unknown>;
 }
 
-/** @see {IsCCReport} ts-auto-guard:type-guard */
-export type CCReport = Record<string,Array<CCEntry>>
+/** @see {IsHalEntry} ts-auto-guard:type-guard */
+export interface HalEntry {
+  total: Array<number>;
+  functions: Array<Array<Array<number> | string>>;
+}
 
-export interface Tree<T> {
-    [x: string]: T | Tree<T>;
+/** @see {IsMIEntry} ts-auto-guard:type-guard */
+export interface MIEntry {
+  mi: number;
+  rank: RadonRank;
+}
+
+export type Report<T> = Record<string, T>;
+
+/** @see {IsCCReport} ts-auto-guard:type-guard */
+export type CCReport = Report<Array<CCEntry>>;
+
+/** @see {IsHalReport} ts-auto-guard:type-guard */
+export type HalReport = Report<HalEntry>;
+
+/** @see {IsMIReport} ts-auto-guard:type-guard */
+export type MIReport = Report<MIEntry>;
+
+/** @see {IsIToString} ts-auto-guard:type-guard */
+export interface IToString {
+  // eslint-disable-next-line @typescript-eslint/naming-convention -- Built-in method.
+  toString: () => string;
+}
+
+/** @see {IsIToMD} ts-auto-guard:type-guard */
+export interface IToMD {
+  //eslint-disable-next-line @typescript-eslint/naming-convention -- Functions should not be PascalCase that's a bug.
+  toMD: () => string;
 }
