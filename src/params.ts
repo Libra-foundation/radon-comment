@@ -4,20 +4,20 @@ import {context} from "@actions/github";
 const IS_TESTING: boolean = process.env.NODE_ENV === "test";
 
 const CC_PATH: string = IS_TESTING
-  ? core.getInput("cc")
-  : "__tests__/data/cc.json";
+  ? "__tests__/data/cc.json"
+  : core.getInput("cc");
 
 const HAS_CC: boolean = CC_PATH !== "";
 
 const HAL_PATH: string = IS_TESTING
-  ? core.getInput("hal")
-  : "__tests__/data/hal.json";
+  ? "__tests__/data/hal.json"
+  : core.getInput("hal");
 
 const HAS_HAL: boolean = HAL_PATH !== "";
 
 const MI_PATH: string = IS_TESTING
-  ? core.getInput("mi")
-  : "__tests__/data/mi.json";
+  ? "__tests__/data/mi.json"
+  : core.getInput("mi");
 
 const HAS_MI: boolean = MI_PATH !== "";
 
