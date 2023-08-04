@@ -8,15 +8,12 @@ inputs:
     required: false
   cc:
     description: 'Path to the json output of the cc sub command'
-    default: ''
     required: false
   hal:
     description: 'Path to the json output of the hal sub command'
-    default: ''
     required: false
   mi:
     description: 'Path to the json output of the mi sub command'
-    default: ''
     required: false
 runs:
   using: 'node16'
