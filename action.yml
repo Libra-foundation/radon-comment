@@ -1,5 +1,5 @@
 name: 'Radon Comment'
-description: 'Comment radon's analysys results on PR'
+description: 'Comment radon\'s analysys results on PR'
 author: 'Libra Foundation'
 inputs:
   GITHUB_TOKEN:
