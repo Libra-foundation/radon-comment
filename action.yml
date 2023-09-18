@@ -1,10 +1,19 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Radon Comment'
+description: 'Comment radon s analysys results on PR'
+author: 'Libra Foundation'
 inputs:
   GITHUB_TOKEN:
     description: 'Github token of the repository (automatically created by Github)'
     default: ${{ github.token }}
+    required: false
+  cc:
+    description: 'Path to the json output of the cc sub command'
+    required: false
+  hal:
+    description: 'Path to the json output of the hal sub command'
+    required: false
+  mi:
+    description: 'Path to the json output of the mi sub command'
     required: false
 runs:
   using: 'node16'

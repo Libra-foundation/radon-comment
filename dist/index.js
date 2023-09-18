@@ -159,16 +159,16 @@ const core = __importStar(__nccwpck_require__(2186));
 const github_1 = __nccwpck_require__(5438);
 const IS_TESTING = process.env.NODE_ENV === "test";
 const CC_PATH = IS_TESTING
-    ? core.getInput("cc")
-    : "__tests__/data/cc.json";
+    ? "__tests__/data/cc.json"
+    : core.getInput("cc");
 const HAS_CC = CC_PATH !== "";
 const HAL_PATH = IS_TESTING
-    ? core.getInput("hal")
-    : "__tests__/data/hal.json";
+    ? "__tests__/data/hal.json"
+    : core.getInput("hal");
 const HAS_HAL = HAL_PATH !== "";
 const MI_PATH = IS_TESTING
-    ? core.getInput("mi")
-    : "__tests__/data/mi.json";
+    ? "__tests__/data/mi.json"
+    : core.getInput("mi");
 const HAS_MI = MI_PATH !== "";
 const PR_NUMBER = isNaN(parseInt(core.getInput("pr_number")))
     ? (_b = (_a = github_1.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) !== null && _b !== void 0 ? _b : -1
